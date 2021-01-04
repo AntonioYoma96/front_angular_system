@@ -3,12 +3,9 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "FRONT": {
+    "smartpeople": {
       "projectType": "application",
       "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        },
         "@schematics/angular:application": {
           "strict": true
         }
@@ -20,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/FRONT",
+            "outputPath": "dist/smartpeople",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -31,7 +28,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.css",
+              "node_modules/primeicons/primeicons.css",
+              "primeng-lts/resources/themes/bootstrap4-light-blue/theme.css",
+              "node_modules/primeng-lts/resources/primeng.min.css"
             ],
             "scripts": []
           },
@@ -68,18 +68,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "FRONT:build"
+            "browserTarget": "smartpeople:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "FRONT:build:production"
+              "browserTarget": "smartpeople:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "FRONT:build"
+            "browserTarget": "smartpeople:build"
           }
         },
         "test": {
@@ -94,7 +94,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.css"
             ],
             "scripts": []
           }
@@ -116,19 +116,19 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "FRONT:serve"
+            "devServerTarget": "smartpeople:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "FRONT:serve:production"
+              "devServerTarget": "smartpeople:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "FRONT",
+  "defaultProject": "smartpeople",
   "cli": {
-    "analytics": "8827afbb-b0e8-4956-a7bf-2c6dda537348"
+    "analytics": "af7eb397-c1f5-49f4-820d-7d101e82fed0"
   }
 }

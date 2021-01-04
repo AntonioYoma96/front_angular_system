@@ -1,6 +1,6 @@
 # SmartPeople 2.0 (Frontend)
 Este repositorio contiene el frontend para SmartPeople 2.0. Está basado en [Node 12](https://nodejs.org/) y [Angular
- 11](https://angular.io/) con el kit de componentes [Angular Material](https://material.angular.io/).
+ 11](https://angular.io/) con el kit de componentes [PrimeNG v10](https://www.primefaces.org/primeng/v10-lts/).
 
 ## Tabla de contenidos
 1. [Requerimientos](#requerimientos)

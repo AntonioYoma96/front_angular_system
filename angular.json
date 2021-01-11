@@ -29,9 +29,10 @@
             ],
             "styles": [
               "src/styles.css",
-              "node_modules/primeicons/primeicons.css",
-              "primeng-lts/resources/themes/bootstrap4-light-blue/theme.css",
-              "node_modules/primeng-lts/resources/primeng.min.css"
+              "./node_modules/primeicons/primeicons.css",
+              "./node_modules/primeng-lts/resources/themes/bootstrap4-light-blue/theme.css",
+              "./node_modules/primeng-lts/resources/primeng.min.css",
+              "./node_modules/primeflex/primeflex.css"
             ],
             "scripts": []
           },

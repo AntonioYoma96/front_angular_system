@@ -1,0 +1,18 @@
+<ul class="layout-menu-list" [style]="{'margin-left': margin}">
+  <li *ngFor="let item of items">
+    <ng-container [ngSwitch]="item.type">
+      <ng-container *ngSwitchCase="'category'">
+        <h6>{{ item.label }}</h6>
+      </ng-container>
+      <ng-container *ngSwitchCase="'link'">
+        <button pButton pRipple *ngIf="isSidebarCollapsed else notCollapsed" [icon]="item.icon" class="p-button-success p-button-rounded p-mb-2"></button>
+        <ng-template #notCollapsed>
+          <button pButton pRipple [label]="item.label" [icon]="item.icon" class="p-button-text p-button-secondary layout-menu-buttons"></button>
+        </ng-template>
+      </ng-container>
+      <ng-container *ngIf="item.items">
+        <app-sidebar-buttons [items]="item.items" [margin]="'10px'"></app-sidebar-buttons>
+      </ng-container>
+    </ng-container>
+  </li>
+</ul>

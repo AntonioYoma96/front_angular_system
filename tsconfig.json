@@ -20,7 +20,7 @@
       "dom"
     ],
     "paths": {
-      "primeng/*": [
+      "primeng-lts/*": [
         "node_modules/primeng-lts/*"
       ]
     }

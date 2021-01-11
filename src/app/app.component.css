@@ -1,0 +1,25 @@
+div.layout-content {
+  margin-left: 70px;
+  transition: margin-left 1s;
+  z-index: -2;
+}
+
+@media screen and (min-width: 992px) {
+  div.layout-content {
+    margin-left: 250px;
+  }
+}
+
+div.layout-content-expanded {
+  margin-left: 70px;
+}
+
+div.hide-content {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 0.8;
+  top: 0;
+  left: 0;
+}

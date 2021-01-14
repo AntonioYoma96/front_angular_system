@@ -1,5 +1,11 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { SidebarService } from 'src/app/services/sidebar.service';
+import { HelperService } from 'src/app/services/helper.service';
+
+interface SidebarItemModel {
+  label: string;
+  route: string;
+  icon: string;
+}
 
 @Component({
   selector: 'app-sidebar',
@@ -7,58 +13,39 @@ import { SidebarService } from 'src/app/services/sidebar.service';
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent implements OnInit {
-  items: Array<any>;
+  items: Array<SidebarItemModel>;
   isSidebarCollapsed: boolean;
-  isLargeDevice: boolean;
 
-  constructor(private sidebarService: SidebarService) {
+  constructor(private helperService: HelperService) {
     this.items = [];
-
-    this.isSidebarCollapsed = window.innerWidth < 992;
-    this.isLargeDevice = window.innerWidth >= 992;
+    this.isSidebarCollapsed = true;
+    this.helperService.sidebarStatus.subscribe((res) => {
+      this.isSidebarCollapsed = res;
+    });
   }
 
   ngOnInit(): void {
     this.items = [
-      { label: 'Inicio', type: 'link', icon: 'pi pi-home' },
+      { label: 'Inicio', route: '#', icon: 'pi pi-home' },
       {
-        label: 'Registro de Actividades',
-        type: 'link',
+        label: 'Actividades',
+        route: '#',
         icon: 'pi pi-calendar',
       },
-      { label: 'Gestión de Tickets', type: 'link', icon: 'pi pi-check-square' },
+      { label: 'Tickets', route: '#', icon: 'pi pi-check-square' },
     ];
-    this.sidebarService.sideBarCollapseState.next(this.isSidebarCollapsed);
-    this.sidebarService.hideContentState.next(
-      !this.isSidebarCollapsed && !this.isLargeDevice
-    );
   }
 
   @HostListener('window:resize')
   onResize(): void {
-    if (window.innerWidth >= 992) {
-      if (!this.isLargeDevice) {
-        this.isLargeDevice = !this.isLargeDevice;
-        this.sidebarService.hideContentState.next(false);
-      }
-      if (this.isSidebarCollapsed) {
-        this.sidebarToggle();
-      }
-    } else {
-      if (this.isLargeDevice) {
-        this.isLargeDevice = !this.isLargeDevice;
-      }
+    if (window.innerWidth < 992) {
       if (!this.isSidebarCollapsed) {
-        this.sidebarToggle();
+        this.toggleSidebar();
       }
     }
   }
 
-  sidebarToggle(): void {
-    this.isSidebarCollapsed = !this.isSidebarCollapsed;
-    this.sidebarService.sideBarCollapseState.next(this.isSidebarCollapsed);
-    this.sidebarService.hideContentState.next(
-      !this.isSidebarCollapsed && !this.isLargeDevice
-    );
+  toggleSidebar(): void {
+    this.helperService.toggleSidebar();
   }
 }

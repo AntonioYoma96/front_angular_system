@@ -1,37 +1,18 @@
-<div class="p-d-flex p-flex-column layout-menu"
-     [ngClass]="{'layout-menu-responsive': isSidebarCollapsed,
-     'layout-menu-small': !this.isSidebarCollapsed && !this.isLargeDevice}">
-  <div class="p-d-flex layout-menu-head"
-       [ngClass]="{'p-flex-row p-ai-center p-text-center': !isSidebarCollapsed, 'p-flex-column p-text-left': isSidebarCollapsed}">
-    <div class="p-mb-2 layout-menu-logo-c">
-      <img src="assets/logo_seis/favicon-32x32.png" alt="Logo de SEIS" style="width: 37px">
-    </div>
+<div class="p-d-flex p-flex-column layout-sidebar" [ngClass]="{'layout-sidebar-collapsed': isSidebarCollapsed}">
+  <div class="p-d-flex p-flex-row p-jc-between layout-sidebar-toggle">
     <div>
-      <button pButton pRipple type="button"
-              [icon]="!isSidebarCollapsed ? 'pi pi-angle-double-left' : 'pi pi-angle-double-right'"
-              class="p-button-rounded" [ngClass]="{'p-button-text': !isSidebarCollapsed}"
-              (click)="sidebarToggle()"></button>
+      <button pButton pRipple type="button" (click)="toggleSidebar()"
+              [icon]="isSidebarCollapsed ? 'pi pi-angle-double-right' : 'pi pi-angle-double-left'"></button>
     </div>
-    <div class="p-text-center layout-menu-logo">
-      <img src="assets/logo_app/logo_smartpeople_h40px.png" alt="Logo de SmartPeople">
-    </div>
+    <img src="assets/logo_app/logo_smartpeople_h40px.png" alt="Logo SmartPeople" height="40" class="p-ml-3">
   </div>
-  <div class="p-mb-1">
+  <div>
     <hr>
   </div>
-  <div class="p-as-stretch layout-menu-links" [ngClass]="{'p-text-left': isSidebarCollapsed}">
-    <app-sidebar-buttons [items]="items"></app-sidebar-buttons>
-  </div>
-  <div class="p-mt-auto">
-    <hr>
-  </div>
-  <div class="p-d-flex p-flex-row p-ai-center layout-menu-user">
-    <div>
-      <button pButton pRipple type="button" icon="pi pi-user" class="p-button-rounded"></button>
-    </div>
-    <div class="p-d-flex p-flex-column p-ml-2 layout-menu-ids">
-      <div class="layout-menu-name">Nombre Apellido</div>
-      <div class="layout-menu-email">Correo electrónico</div>
-    </div>
+  <div class="p-as-stretch layout-sidebar-buttons"
+       [ngClass]="{'layout-sidebar-buttons-scrollable': !isSidebarCollapsed}">
+    <ng-container *ngFor="let item of items">
+      <button pButton pRipple [icon]="item.icon" [label]="item.label" [routerLink]="item.route" class="p-mb-1"></button>
+    </ng-container>
   </div>
 </div>

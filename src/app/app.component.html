@@ -1,9 +1,8 @@
 <div>
   <app-sidebar></app-sidebar>
-  <div class="layout-content"
-       [ngClass]="{'layout-content-expanded': isSidebarCollapse,
-       'layout-content-hidden': hideContent}">
+  <app-navbar></app-navbar>
+  <div class="layout-content" [ngClass]="{'layout-content-expanded': isSidebarCollapse}">
     <router-outlet></router-outlet>
   </div>
-  <div class="hide-content" *ngIf="hideContent"></div>
+  <div class="layout-mask" [ngClass]="{'layout-mask-active': !isSidebarCollapse}" (click)="toggleSidebar()"></div>
 </div>

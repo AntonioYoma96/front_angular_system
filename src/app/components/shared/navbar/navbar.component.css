@@ -1,0 +1,25 @@
+div.layout-navbar {
+  position: absolute;
+  margin-left: 70px;
+  height: 70px;
+  width: calc(100% - 70px);
+  top: 0;
+  left: 0;
+  transition: all 1s;
+  outline: 1px #dee2e6 solid;
+}
+
+div.layout-navbar-expanded {
+  width: calc(100% - 70px) !important;
+  margin-left: 70px !important;
+}
+
+@media screen and (min-width: 992px) {
+  div.layout-navbar {
+    width: calc(100% - 250px);
+    margin-left: 250px;
+  }
+}
+:host ::ng-deep .layout-navbar p-splitButton span.p-button-label {
+  margin-bottom: 2px;
+}

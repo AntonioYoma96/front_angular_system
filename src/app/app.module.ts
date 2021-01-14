@@ -8,24 +8,28 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 // Angular project files
-import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { SidebarButtonsComponent } from './components/shared/sidebar-buttons/sidebar-buttons.component';
+import { SidebarComponent } from './components/shared/sidebar/sidebar.component';
+import { NavbarComponent } from './components/shared/navbar/navbar.component';
+
+// Services
+import { HelperService } from './services/helper.service';
 
 // PrimeNG modules
 import { ButtonModule } from 'primeng-lts/button';
 import { RippleModule } from 'primeng-lts/ripple';
-import { SidebarService } from './services/sidebar.service';
+import { SplitButtonModule } from 'primeng-lts/splitbutton';
 
 @NgModule({
-  declarations: [AppComponent, SidebarComponent, SidebarButtonsComponent],
+  declarations: [AppComponent, SidebarComponent, NavbarComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     ButtonModule,
     RippleModule,
+    SplitButtonModule,
   ],
-  providers: [SidebarService],
+  providers: [HelperService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

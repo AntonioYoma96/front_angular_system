@@ -7,6 +7,7 @@ div.layout-navbar {
   left: 0;
   transition: all 1s;
   outline: 1px #dee2e6 solid;
+  background-color: white;
 }
 
 div.layout-navbar-expanded {

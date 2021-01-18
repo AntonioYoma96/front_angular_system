@@ -1,0 +1,15 @@
+div.layout-login {
+  padding: 10px;
+}
+div.layout-login-logo img {
+  height: 80px;
+}
+a.layout-login-recovery {
+  text-decoration: none;
+}
+
+@media screen and (min-width: 992px){
+  div.layout-login {
+    padding: 100px 0 0;
+  }
+}

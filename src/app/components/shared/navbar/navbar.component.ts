@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HelperService } from '../../../services/helper.service';
+import { HelperService } from 'src/app/services/helper.service';
 import { MenuItem } from 'primeng-lts/api';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +14,10 @@ export class NavbarComponent implements OnInit {
 
   userOptions: MenuItem[];
 
-  constructor(private helperService: HelperService) {
+  constructor(
+    private helperService: HelperService,
+    private authenticationService: AuthenticationService
+  ) {
     this.isSidebarCollapse = false;
     this.currentTitle = '';
 
@@ -27,7 +31,13 @@ export class NavbarComponent implements OnInit {
     this.userOptions = [
       { label: 'Perfil', icon: 'pi pi-user-edit', routerLink: '#' },
       { label: 'Configuración', icon: 'pi pi-cog', routerLink: '#' },
-      { label: 'Salir', icon: 'pi pi-sign-out', routerLink: '#' },
+      {
+        label: 'Salir',
+        icon: 'pi pi-sign-out',
+        command: () => {
+          this.authenticationService.logout();
+        },
+      },
     ];
   }
 

@@ -6,7 +6,7 @@ div.layout-content {
 }
 
 div.layout-content-expanded {
-  margin-left: 70px !important;
+  margin-left: 70px;
 }
 
 div.layout-mask {
@@ -29,7 +29,17 @@ div.layout-mask-active {
   div.layout-content {
     margin-left: 250px;
   }
+
+  div.layout-content-expanded {
+    margin-left: 70px;
+  }
+
   div.layout-mask {
     display: none;
   }
+}
+
+.layout-content-login {
+  margin: 0 !important;
+  transition: none !important;
 }

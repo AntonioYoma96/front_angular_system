@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { HelperService } from './services/helper.service';
+import { HelperService } from 'src/app/services/helper.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -9,11 +10,20 @@ import { HelperService } from './services/helper.service';
 export class AppComponent {
   title = 'smartpeople';
   isSidebarCollapse: boolean;
+  usuarioActual = '';
 
-  constructor(private helperService: HelperService) {
+  something: any;
+
+  constructor(
+    private helperService: HelperService,
+    private authenticationService: AuthenticationService
+  ) {
     this.isSidebarCollapse = false;
     this.helperService.sidebarStatus.subscribe((res) => {
       this.isSidebarCollapse = res;
+    });
+    this.authenticationService.credentials.subscribe((res) => {
+      this.usuarioActual = res ? res.user_email : '';
     });
   }
 

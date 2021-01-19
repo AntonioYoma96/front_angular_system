@@ -33,6 +33,7 @@ import { ToastModule } from 'primeng-lts/toast';
 // PrimeNG services
 import { MessageService } from 'primeng-lts/api';
 import { appInitializer } from 'src/app/helpers/appInitializer';
+import { TicketsComponent } from './components/tickets/tickets.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { appInitializer } from 'src/app/helpers/appInitializer';
     NavbarComponent,
     LoginComponent,
     HomeComponent,
+    TicketsComponent,
   ],
   imports: [
     // Angular

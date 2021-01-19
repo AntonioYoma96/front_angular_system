@@ -1,9 +1,10 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { HelperService } from 'src/app/services/helper.service';
+import { PrimeNGConfig } from 'primeng-lts/api';
 
 interface SidebarItemModel {
   label: string;
-  route: string;
+  route: [string];
   icon: string;
 }
 
@@ -16,7 +17,10 @@ export class SidebarComponent implements OnInit {
   items: Array<SidebarItemModel>;
   isSidebarCollapsed: boolean;
 
-  constructor(private helperService: HelperService) {
+  constructor(
+    private helperService: HelperService,
+    private primengConfig: PrimeNGConfig
+  ) {
     this.items = [];
     this.isSidebarCollapsed = true;
     this.helperService.sidebarStatus.subscribe((res) => {
@@ -25,14 +29,15 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.primengConfig.ripple = true;
     this.items = [
-      { label: 'Inicio', route: '#', icon: 'pi pi-home' },
+      { label: 'Inicio', route: ['/home'], icon: 'pi pi-home' },
       {
         label: 'Actividades',
-        route: '#',
+        route: ['/tickets'],
         icon: 'pi pi-calendar',
       },
-      { label: 'Tickets', route: '#', icon: 'pi pi-check-square' },
+      { label: 'Tickets', route: ['#'], icon: 'pi pi-check-square' },
     ];
   }
 

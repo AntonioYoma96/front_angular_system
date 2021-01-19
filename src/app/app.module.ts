@@ -1,6 +1,6 @@
 // Angular core
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -32,6 +32,7 @@ import { InputTextModule } from 'primeng-lts/inputtext';
 import { ToastModule } from 'primeng-lts/toast';
 // PrimeNG services
 import { MessageService } from 'primeng-lts/api';
+import { appInitializer } from 'src/app/helpers/appInitializer';
 
 @NgModule({
   declarations: [
@@ -59,11 +60,16 @@ import { MessageService } from 'primeng-lts/api';
     HttpClientModule,
   ],
   providers: [
-    AuthenticationService,
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     HelperService,
     MessageService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appInitializer,
+      multi: true,
+      deps: [AuthenticationService],
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

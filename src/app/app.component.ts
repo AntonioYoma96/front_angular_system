@@ -12,8 +12,6 @@ export class AppComponent {
   isSidebarCollapse: boolean;
   usuarioActual = '';
 
-  something: any;
-
   constructor(
     private helperService: HelperService,
     private authenticationService: AuthenticationService

@@ -21,7 +21,6 @@ export class AuthenticationService {
     );
     if (actualStorage) {
       this.credentialsSubject = new BehaviorSubject<any>(actualStorage);
-      this.refreshToken();
     } else {
       this.credentialsSubject = new BehaviorSubject<any>(null);
     }
@@ -61,7 +60,7 @@ export class AuthenticationService {
   }
 
   refreshToken(): any {
-    const lastCredentials = this.credentialValue;
+    const lastCredentials = this.credentialValue ? this.credentialValue : '';
 
     return this.http
       .post<UserCredentials>(`${environment.apiUrl}/auth/token/refresh/`, {

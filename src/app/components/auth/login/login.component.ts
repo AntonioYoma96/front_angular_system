@@ -8,7 +8,8 @@ import {
 import { MessageService } from 'primeng-lts/api';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { first } from 'rxjs/operators';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HelperService } from 'src/app/services/helper.service';
 
 @Component({
   selector: 'app-login',
@@ -18,15 +19,16 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
-  error = '';
   returnUrl = '';
+  httpError: any;
 
   constructor(
     private formBuilder: FormBuilder,
     private messageService: MessageService,
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private helperService: HelperService
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
@@ -36,10 +38,21 @@ export class LoginComponent implements OnInit {
     if (authenticationService.credentialValue) {
       this.router.navigate(['']);
     }
+    this.helperService.errorMessage.subscribe((res) => {
+      this.httpError = res;
+    });
   }
 
   ngOnInit(): void {
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
+    if (this.httpError.title) {
+      this.messageService.add({
+        severity: 'error',
+        summary: this.httpError.title,
+        detail: this.httpError.body,
+      });
+      this.helperService.cleanErrorMessage();
+    }
   }
 
   public newMessage(

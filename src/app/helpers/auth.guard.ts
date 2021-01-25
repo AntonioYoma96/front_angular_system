@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): boolean {
     const credentials = this.authenticationService.credentialValue;
-    if (credentials) {
+    if (Object.keys(credentials).length) {
       return true;
     } else {
       this.router.navigate(['/login'], {

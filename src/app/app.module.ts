@@ -6,22 +6,29 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Angular configs
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppRoutingModule } from 'src/app/app-routing.module';
+import { AppComponent } from 'src/app/app.component';
 
 // Angular project files
-import { SidebarComponent } from './components/shared/sidebar/sidebar.component';
-import { NavbarComponent } from './components/shared/navbar/navbar.component';
-import { LoginComponent } from './components/auth/login/login.component';
-import { HomeComponent } from './components/home/home.component';
+import { SidebarComponent } from 'src/app/components/shared/sidebar/sidebar.component';
+import { NavbarComponent } from 'src/app/components/shared/navbar/navbar.component';
+import { LoginComponent } from 'src/app/components/auth/login/login.component';
+import { HomeComponent } from 'src/app/components/home/home.component';
+import { TicketsComponent } from 'src/app/components/tickets/tickets.component';
 
 // Services
-import { HelperService } from './services/helper.service';
-import { AuthenticationService } from './services/authentication.service';
+import { HelperService } from 'src/app/services/helper.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { ColaboradorService } from 'src/app/services/api/colaborador.service';
+import { TicketService } from 'src/app/services/api/ticket.service';
+import { ActividadService } from 'src/app/services/api/actividad.service';
+
+// Initializer
+import { appInitializer } from 'src/app/helpers/appInitializer';
 
 // Interceptors
-import { JwtInterceptor } from './helpers/jwt.interceptor';
-import { ErrorInterceptor } from './helpers/error.interceptor';
+import { JwtInterceptor } from 'src/app/helpers/jwt.interceptor';
+import { ErrorInterceptor } from 'src/app/helpers/error.interceptor';
 
 // PrimeNG modules
 import { ButtonModule } from 'primeng-lts/button';
@@ -30,10 +37,14 @@ import { SplitButtonModule } from 'primeng-lts/splitbutton';
 import { PanelModule } from 'primeng-lts/panel';
 import { InputTextModule } from 'primeng-lts/inputtext';
 import { ToastModule } from 'primeng-lts/toast';
+import { ToolbarModule } from 'primeng-lts/toolbar';
+import { CardModule } from 'primeng-lts/card';
+import { DialogModule } from 'primeng-lts/dialog';
+import { DropdownModule } from 'primeng-lts/dropdown';
+import { CalendarModule } from 'primeng-lts/calendar';
+import { InputTextareaModule } from 'primeng-lts/inputtextarea';
 // PrimeNG services
 import { MessageService } from 'primeng-lts/api';
-import { appInitializer } from 'src/app/helpers/appInitializer';
-import { TicketsComponent } from './components/tickets/tickets.component';
 
 @NgModule({
   declarations: [
@@ -58,12 +69,21 @@ import { TicketsComponent } from './components/tickets/tickets.component';
     PanelModule,
     InputTextModule,
     ToastModule,
+    ToolbarModule,
+    CardModule,
+    DialogModule,
+    DropdownModule,
+    CalendarModule,
+    InputTextareaModule,
     // Http
     HttpClientModule,
   ],
   providers: [
     HelperService,
     MessageService,
+    ColaboradorService,
+    TicketService,
+    ActividadService,
     {
       provide: APP_INITIALIZER,
       useFactory: appInitializer,

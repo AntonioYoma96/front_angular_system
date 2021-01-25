@@ -1,69 +1,40 @@
-import { DatosContractuales } from './contrato';
-import { Colaborador } from './colaborador';
+import { DatosContractuales } from 'src/app/models/contrato';
+import { Colaborador } from 'src/app/models/colaborador';
 
-class DatosOrganizacionales {
-  id?: number;
-  datosContractuales: DatosContractuales;
+interface DatosOrganizacionales {
+  id: number;
+  datos_contractuales: DatosContractuales;
   cargo: Cargo;
   unidad: Unidad;
-  nivelResponsabilidad: NivelResponsabilidad;
-  jefeDirecto?: Colaborador;
-  centroCosto: CentroCosto;
-
-  constructor() {
-    this.datosContractuales = new DatosContractuales();
-    this.cargo = new Cargo();
-    this.unidad = new Unidad();
-    this.nivelResponsabilidad = new NivelResponsabilidad();
-    this.centroCosto = new CentroCosto();
-  }
+  nivel_responsabilidad: NivelResponsabilidad;
+  jefe_directo: Colaborador;
+  centro_costo: CentroCosto;
 }
 
-class Cargo {
-  id?: number;
+interface Cargo {
+  id: number;
   nombre: string;
-
-  constructor() {
-    this.nombre = '';
-  }
 }
 
-class Unidad {
-  id?: number;
+interface Unidad {
+  id: number;
   nombre: string;
-  areaFuncional: AreaFuncional;
-
-  constructor() {
-    this.nombre = '';
-    this.areaFuncional = new AreaFuncional();
-  }
+  area_funcional: AreaFuncional;
 }
 
-class AreaFuncional {
-  id?: number;
+interface AreaFuncional {
+  id: number;
   nombre: string;
-
-  constructor() {
-    this.nombre = '';
-  }
 }
 
-class NivelResponsabilidad {
-  id?: number;
+interface NivelResponsabilidad {
+  id: number;
   nombre: string;
-
-  constructor() {
-    this.nombre = '';
-  }
 }
 
-class CentroCosto {
-  id?: number;
+interface CentroCosto {
+  id: number;
   nombre: string;
-
-  constructor() {
-    this.nombre = '';
-  }
 }
 
 export {

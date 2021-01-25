@@ -1,104 +1,58 @@
-import { Colaborador } from './colaborador';
+import { Colaborador } from 'src/app/models/colaborador';
 
-class DatosFormacion {
-  id?: number;
+interface DatosFormacion {
+  id: number;
   colaborador: Colaborador;
-  tipoFormacion: TipoFormacion;
+  tipo_formacion: TipoFormacion;
   carrera: Carrera;
-  estadoFormacion: EstadoFormacion;
-  fechaTermino: string;
+  estado_formacion: EstadoFormacion;
+  fecha_termino: string;
   institucion: Institucion;
-
-  constructor() {
-    this.colaborador = new Colaborador();
-    this.tipoFormacion = new TipoFormacion();
-    this.carrera = new Carrera();
-    this.estadoFormacion = new EstadoFormacion();
-    this.fechaTermino = '';
-    this.institucion = new Institucion();
-  }
 }
 
-class TipoFormacion {
-  id?: number;
+interface TipoFormacion {
+  id: number;
   nombre: string;
-
-  constructor() {
-    this.nombre = '';
-  }
 }
 
-class Carrera {
-  id?: number;
+interface Carrera {
+  id: number;
   nombre: string;
-
-  constructor() {
-    this.nombre = '';
-  }
 }
 
-class EstadoFormacion {
-  id?: number;
+interface EstadoFormacion {
+  id: number;
   nombre: string;
-
-  constructor() {
-    this.nombre = '';
-  }
 }
 
-class Institucion {
-  id?: number;
-  tipoInstitucion: TipoInstitucion;
+interface Institucion {
+  id: number;
+  tipo_institucion: TipoInstitucion;
   nombre: string;
-
-  constructor() {
-    this.tipoInstitucion = new TipoInstitucion();
-    this.nombre = '';
-  }
 }
 
-class TipoInstitucion {
-  id?: number;
+interface TipoInstitucion {
+  id: number;
   nombre: string;
-
-  constructor() {
-    this.nombre = '';
-  }
 }
 
-class OtroFormacion {
-  id?: number;
+interface OtroFormacion {
+  id: number;
   colaborador: Colaborador;
   institucion: Institucion;
-  tipoOtroFormacion: TipoOtroFormacion;
+  tipo_otro_formacion: TipoOtroFormacion;
   diploma: Diploma;
   horas: number;
-
-  constructor() {
-    this.colaborador = new Colaborador();
-    this.institucion = new Institucion();
-    this.tipoOtroFormacion = new TipoOtroFormacion();
-    this.diploma = new Diploma();
-    this.horas = 0;
-  }
 }
 
-class TipoOtroFormacion {
-  id?: number;
+interface TipoOtroFormacion {
+  id: number;
   nombre: string;
-
-  constructor() {
-    this.nombre = '';
-  }
 }
 
-class Diploma {
-  id?: number;
+interface Diploma {
+  id: number;
   nombre: string;
-
-  constructor() {
-    this.nombre = '';
-  }
 }
 
 export {

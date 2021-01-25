@@ -1,145 +1,99 @@
-import { Colaborador } from './colaborador';
-import { Modulo } from './actividades';
+import { Colaborador } from 'src/app/models/colaborador';
+import { Modulo } from 'src/app/models/actividades';
 
-class Ticket {
-  id?: number;
+interface Ticket {
+  id: number;
   asignado: Colaborador;
   solicitante: Colaborador;
-  validador?: Colaborador;
+  validador: Colaborador;
   origen: Origen;
   modulo: Modulo;
-  version?: string;
+  version: string;
   prioridad: Prioridad;
-  tipoTicket: TipoTicket;
-  fechaLimite?: string;
-  ruta?: string;
+  tipo_ticket: TipoTicket;
+  fecha_limite: string;
+  ruta: string;
   asunto: string;
   descripcion: string;
-  etapaTicket: EtapaTicket;
-  created?: string;
-  modified?: string;
-
-  constructor() {
-    this.asignado = new Colaborador();
-    this.solicitante = new Colaborador();
-    this.origen = new Origen();
-    this.modulo = new Modulo();
-    this.prioridad = new Prioridad();
-    this.tipoTicket = new TipoTicket();
-    this.asunto = '';
-    this.descripcion = '';
-    this.etapaTicket = new EtapaTicket();
-  }
+  etapa_ticket: EtapaTicket;
+  created: string;
+  modified: string;
 }
 
-class TicketLog {
-  id?: number;
+interface TicketLog {
+  id: number;
   ticket: Ticket;
   asignado: Colaborador;
-  etapaTicket: EtapaTicket;
-  inicioEtapa: string;
-  finEtapa?: string;
-
-  constructor() {
-    this.ticket = new Ticket();
-    this.asignado = new Colaborador();
-    this.etapaTicket = new EtapaTicket();
-    this.inicioEtapa = '';
-  }
+  etapa_ticket: EtapaTicket;
+  inicio_etapa: string;
+  fin_etapa: string;
 }
 
-class Prioridad {
-  id?: number;
+interface Prioridad {
+  id: number;
   nombre: string;
   valor: number;
-
-  constructor() {
-    this.nombre = '';
-    this.valor = 0;
-  }
 }
 
-class TipoTicket {
-  id?: number;
+interface TipoTicket {
+  id: number;
   nombre: string;
-
-  constructor() {
-    this.nombre = '';
-  }
 }
 
-class EtapaTicket {
-  id?: number;
+interface EtapaTicket {
+  id: number;
   nombre: string;
-  tipo?: string;
-  dificultad?: string;
-  revMin?: number;
-  revMax?: number;
-  devMin?: number;
-  devMax?: number;
-
-  constructor() {
-    this.nombre = '';
-  }
 }
 
-class ImagenTicket {
-  id?: number;
+interface AreaTicket {
+  id: number;
+  nombre: string;
+}
+
+interface DificultadTicket {
+  id: number;
+  tipo: string;
+  nivel: string;
+  rev_min: number;
+  rev_max: number;
+  dev_min: number;
+  dev_max: number;
+  area_ticket: number;
+  full_dificultad: string;
+}
+
+interface ImagenTicket {
+  id: number;
   ticket: Ticket;
   imagen: string;
-
-  constructor() {
-    this.ticket = new Ticket();
-    this.imagen = '';
-  }
 }
 
-class Mensaje {
-  id?: number;
+interface Mensaje {
+  id: number;
   ticket: Ticket;
   asunto: string;
   descripcion: string;
-  created?: string;
-  modified?: string;
-
-  constructor() {
-    this.ticket = new Ticket();
-    this.asunto = '';
-    this.descripcion = '';
-  }
+  created: string;
+  modified: string;
 }
 
-class ImagenMensaje {
-  id?: number;
+interface ImagenMensaje {
+  id: number;
   mensaje: Mensaje;
   imagen: string;
-
-  constructor() {
-    this.mensaje = new Mensaje();
-    this.imagen = '';
-  }
 }
 
-class Etiqueta {
-  id?: number;
+interface Etiqueta {
+  id: number;
   nombre: string;
-  nivelSeveridad: string;
-  tickets?: number[];
-  mensajes?: number[];
-
-  constructor() {
-    this.nombre = '';
-    this.nivelSeveridad = '';
-  }
+  nivel_severidad: string;
+  tickets: Ticket[];
+  mensajes: Mensaje[];
 }
 
-class Origen {
-  id?: number;
+interface Origen {
+  id: number;
   nombre: string;
-
-  constructor() {
-    this.nombre = '';
-  }
 }
 
 export {
@@ -148,6 +102,8 @@ export {
   Prioridad,
   TipoTicket,
   EtapaTicket,
+  AreaTicket,
+  DificultadTicket,
   ImagenTicket,
   Mensaje,
   ImagenMensaje,

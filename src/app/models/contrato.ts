@@ -1,71 +1,43 @@
-import { Colaborador } from './colaborador';
+import { Colaborador } from 'src/app/models/colaborador';
 
-class DatosContractuales {
-  id?: number;
+interface DatosContractuales {
+  id: number;
   colaborador: Colaborador;
-  fechaInicio: string;
-  fechaTermino?: string;
-  sueldoBase?: number;
-  tipoContrato: TipoContrato;
-  fechaVencimiento?: string;
-  previsionAfp: PrevisionAfp;
-  previsionSalud: PrevisionSalud;
-  banco?: Banco;
-  tipoCuenta?: TipoCuenta;
-  numeroCuenta?: string;
-
-  constructor() {
-    this.colaborador = new Colaborador();
-    this.fechaInicio = '';
-    this.tipoContrato = new TipoContrato();
-    this.previsionAfp = new PrevisionAfp();
-    this.previsionSalud = new PrevisionSalud();
-  }
+  fecha_inicio: string;
+  fecha_termino: string;
+  sueldo_base: number;
+  tipo_contrato: TipoContrato;
+  fecha_vencimiento: string;
+  prevision_afp: PrevisionAfp;
+  prevision_salud: PrevisionSalud;
+  banco: Banco;
+  tipo_cuenta: TipoCuenta;
+  numero_cuenta: string;
 }
 
-class TipoContrato {
-  id?: number;
+interface TipoContrato {
+  id: number;
   nombre: string;
-
-  constructor() {
-    this.nombre = '';
-  }
 }
 
-class PrevisionAfp {
-  id?: number;
+interface PrevisionAfp {
+  id: number;
   nombre: string;
-
-  constructor() {
-    this.nombre = '';
-  }
 }
 
-class PrevisionSalud {
-  id?: number;
+interface PrevisionSalud {
+  id: number;
   nombre: string;
-
-  constructor() {
-    this.nombre = '';
-  }
 }
 
-class Banco {
-  id?: number;
+interface Banco {
+  id: number;
   nombre: string;
-
-  constructor() {
-    this.nombre = '';
-  }
 }
 
-class TipoCuenta {
-  id?: number;
+interface TipoCuenta {
+  id: number;
   nombre: string;
-
-  constructor() {
-    this.nombre = '';
-  }
 }
 
 export {

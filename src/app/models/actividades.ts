@@ -1,101 +1,62 @@
-import { Cargo } from './organizacion';
-import { Colaborador } from './colaborador';
+import { Cargo } from 'src/app/models/organizacion';
+import { Colaborador } from 'src/app/models/colaborador';
 
-class Actividad {
-  id?: number;
+interface Actividad {
+  id: number;
   colaborador: Colaborador;
   fecha: string;
-  horaInicio: string;
-  horaTermino?: string;
-  datosActividad: DatosActividad;
+  hora_inicio: string;
+  hora_termino: string;
+  datos_actividad: DatosActividad;
   proyecto: Proyecto;
-  observaciones?: string;
-  created?: string;
-  modified?: string;
-
-  constructor() {
-    this.colaborador = new Colaborador();
-    this.fecha = '';
-    this.horaInicio = '';
-    this.datosActividad = new DatosActividad();
-    this.proyecto = new Proyecto();
-  }
+  observaciones: string;
+  created: string;
+  modified: string;
 }
 
-class DatosActividad {
-  id?: number;
+interface DatosActividad {
+  id: number;
   nombre: string;
-  descripcion?: string;
-  tiempoMaximo?: number;
-  tiempoMinimo?: number;
+  descripcion: string;
+  tiempo_maximo: number;
+  tiempo_minimo: number;
   cargo: Cargo;
-
-  constructor() {
-    this.nombre = '';
-    this.cargo = new Cargo();
-  }
 }
 
-class Proyecto {
-  id?: number;
+interface Proyecto {
+  id: number;
   nombre: string;
   cliente: Cliente;
-  repositorio?: string;
-
-  constructor() {
-    this.nombre = '';
-    this.cliente = new Cliente();
-  }
+  repositorio: string;
 }
 
-class Cliente {
-  id?: number;
+interface Cliente {
+  id: number;
   nombre: string;
-
-  constructor() {
-    this.nombre = '';
-  }
 }
 
-class MesaAyuda {
-  id?: number;
+interface MesaAyuda {
+  id: number;
   actividad: Actividad;
-  tipoSoporte: TipoSoporte;
+  tipo_soporte: TipoSoporte;
   modulo: Modulo;
   funcionario: string;
-  telefono?: string;
-  email?: string;
-  isHabil: boolean;
-  created?: string;
-  modified?: string;
-
-  constructor() {
-    this.actividad = new Actividad();
-    this.tipoSoporte = new TipoSoporte();
-    this.modulo = new Modulo();
-    this.funcionario = '';
-    this.isHabil = false;
-  }
+  telefono: string;
+  email: string;
+  is_habil: boolean;
+  created: string;
+  modified: string;
 }
 
-class TipoSoporte {
-  id?: number;
+interface TipoSoporte {
+  id: number;
   nombre: string;
-
-  constructor() {
-    this.nombre = '';
-  }
 }
 
-class Modulo {
-  id?: number;
+interface Modulo {
+  id: number;
   nombre: string;
   proyecto: Proyecto;
-
-  constructor() {
-    this.nombre = '';
-    this.proyecto = new Proyecto();
-  }
 }
 
 export {

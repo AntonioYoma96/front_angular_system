@@ -6,24 +6,25 @@ import { map } from 'rxjs/operators';
 import { UserCredentials } from 'src/app/models/users';
 import { Router } from '@angular/router';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class AuthenticationService {
   private credentialsSubject: BehaviorSubject<any>;
   public credentials: Observable<any>;
 
   private accessTokenTimeout: any;
 
+  private readonly apiUrl: string;
+
   constructor(private http: HttpClient, private router: Router) {
+    this.apiUrl = environment.apiUrl;
+
     const actualStorage = JSON.parse(
       localStorage.getItem('credentials') as string
     );
-    if (actualStorage) {
-      this.credentialsSubject = new BehaviorSubject<any>(actualStorage);
-    } else {
-      this.credentialsSubject = new BehaviorSubject<any>(null);
-    }
+    this.credentialsSubject = new BehaviorSubject(
+      actualStorage ? actualStorage : {}
+    );
+
     this.credentials = this.credentialsSubject.asObservable();
   }
 
@@ -33,7 +34,7 @@ export class AuthenticationService {
 
   login(email: string, password: string): Observable<UserCredentials> {
     return this.http
-      .post<UserCredentials>(`${environment.apiUrl}/auth/token/`, {
+      .post<UserCredentials>(`${this.apiUrl}/auth/token/`, {
         email,
         password,
       })
@@ -61,9 +62,8 @@ export class AuthenticationService {
 
   refreshToken(): any {
     const lastCredentials = this.credentialValue ? this.credentialValue : '';
-
     return this.http
-      .post<UserCredentials>(`${environment.apiUrl}/auth/token/refresh/`, {
+      .post<UserCredentials>(`${this.apiUrl}/auth/token/refresh/`, {
         refresh: lastCredentials.refresh,
       })
       .pipe(
@@ -78,7 +78,7 @@ export class AuthenticationService {
 
   logout(): void {
     this.stopRefreshTokenTimer();
-    this.credentialsSubject.next(null);
+    this.credentialsSubject.next({});
     localStorage.removeItem('credentials');
     this.router.navigate(['/login']);
   }

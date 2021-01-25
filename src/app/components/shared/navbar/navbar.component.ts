@@ -12,6 +12,7 @@ export class NavbarComponent implements OnInit {
   isSidebarCollapse: boolean;
   currentTitle: string;
 
+  userEmail = '';
   userOptions: MenuItem[];
 
   constructor(
@@ -27,6 +28,8 @@ export class NavbarComponent implements OnInit {
     this.helperService.currentTitle.subscribe((res) => {
       this.currentTitle = res;
     });
+
+    this.userEmail = this.authenticationService.credentialValue.colaborador.nombre;
 
     this.userOptions = [
       { label: 'Perfil', icon: 'pi pi-user-edit', routerLink: '#' },

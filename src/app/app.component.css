@@ -1,12 +1,12 @@
 div.layout-content {
-  margin-left: 70px;
+  margin-left: 73px;
   margin-top: 70px;
   transition: margin-left 1s;
   z-index: 1;
 }
 
 div.layout-content-expanded {
-  margin-left: 70px;
+  margin-left: 73px;
 }
 
 div.layout-mask {
@@ -31,7 +31,7 @@ div.layout-mask-active {
   }
 
   div.layout-content-expanded {
-    margin-left: 70px;
+    margin-left: 73px;
   }
 
   div.layout-mask {

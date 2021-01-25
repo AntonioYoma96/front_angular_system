@@ -32,12 +32,8 @@ export class SidebarComponent implements OnInit {
     this.primengConfig.ripple = true;
     this.items = [
       { label: 'Inicio', route: ['/home'], icon: 'pi pi-home' },
-      {
-        label: 'Actividades',
-        route: ['/tickets'],
-        icon: 'pi pi-calendar',
-      },
-      { label: 'Tickets', route: ['#'], icon: 'pi pi-check-square' },
+      { label: 'Actividades', route: ['#'], icon: 'pi pi-calendar' },
+      { label: 'Tickets', route: ['/tickets'], icon: 'pi pi-check-square' },
     ];
   }
 

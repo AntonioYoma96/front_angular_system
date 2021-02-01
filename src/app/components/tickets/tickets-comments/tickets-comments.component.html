@@ -1,0 +1,20 @@
+<div>
+  <p-card *ngFor="let mensaje of lstMensajes" styleClass="p-mb-3">
+    <div class="p-grid" style="margin: 0">
+      <div class="p-col-2">
+        <div class="p-d-flex p-flex-row">
+          <div class="p-as-center">
+            <i class="pi pi-user"></i>
+          </div>
+          <div class="p-ml-2">
+            <p class="p-text-bold">{{mensaje.autor.nombre}} {{mensaje.autor.apellido_paterno}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="p-col-10">
+        <h3>{{mensaje.asunto}}</h3>
+        <p>{{mensaje.descripcion}}</p>
+      </div>
+    </div>
+  </p-card>
+</div>

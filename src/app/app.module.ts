@@ -45,6 +45,8 @@ import { CalendarModule } from 'primeng-lts/calendar';
 import { InputTextareaModule } from 'primeng-lts/inputtextarea';
 // PrimeNG services
 import { MessageService } from 'primeng-lts/api';
+import { RecoveryComponent } from './components/auth/recovery/recovery.component';
+import { NewPasswordComponent } from './components/auth/new-password/new-password.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,8 @@ import { MessageService } from 'primeng-lts/api';
     LoginComponent,
     HomeComponent,
     TicketsComponent,
+    RecoveryComponent,
+    NewPasswordComponent,
   ],
   imports: [
     // Angular

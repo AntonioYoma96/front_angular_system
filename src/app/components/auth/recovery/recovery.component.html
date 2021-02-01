@@ -1,0 +1,36 @@
+<div class="p-grid p-nogutter layout-login">
+    <div class="p-col p-lg-4 p-lg-offset-4">
+        <p-panel header="Recuperación de cuenta">
+            <div class="layout-login-logo p-mb-3 p-text-center">
+                <img src="assets/logo_app/logo_smartpeople.png" alt="Logo SmartPeople">
+            </div>
+            <div class="p-mb-5">
+                <hr>
+            </div>
+            <div>
+                <p>
+                    Asegúrese de que sea un correo institucional, posteriormente le enviaremos el link para que pueda modificar su contraseña.
+                </p>
+            </div>
+            <form [formGroup]="recoveryForm" (ngSubmit)="recovery()">
+                <div class="p-fluid">
+                    <div class="p-field">
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                            <input type="email" pInputText formControlName="email" placeholder="Correo electrónico" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+                        </div>
+                        <div *ngIf="lF['email']['dirty'] && lF['email'].errors">
+                            <small *ngIf="lF['email'].errors['pattern']" class="p-invalid">Correo invalido</small>
+                            <small *ngIf="lF['email'].errors['required']" class="p-invalid">Campo obligatorio</small>
+                        </div>
+                    </div>
+
+
+                    <div class="p-d-flex p-flex-column">
+                        <button pButton pRipple type="submit" label="Enviar solicitud" class="p-button-success p-mb-2" [disabled]="recoveryForm.invalid"></button>
+                    </div>
+                </div>
+            </form>
+        </p-panel>
+    </div>
+</div>

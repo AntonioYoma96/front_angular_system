@@ -35,7 +35,8 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required],
     });
 
-    if (authenticationService.credentialValue) {
+    if ( Object.keys( authenticationService.credentialValue ).length) {
+      console.log( authenticationService.credentialValue )
       this.router.navigate(['']);
     }
     this.helperService.errorMessage.subscribe((res) => {

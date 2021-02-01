@@ -86,4 +86,33 @@ export class AuthenticationService {
   private stopRefreshTokenTimer(): void {
     clearTimeout(this.accessTokenTimeout);
   }
+
+  recoveryPassword(email: string): Observable<any> {
+    console.log(email)
+    return this.http
+      .post<any>(`${this.apiUrl}/auth/request-reset-password/`, {
+        email
+      })
+      .pipe(
+        map((data) => {
+          console.log(data)
+          return data;
+        })
+      );
+  }
+
+  newPassword(password1: string, password2: string): Observable<any> {
+    console.log(password1)
+    return this.http
+      .post<any>(`${this.apiUrl}//auth/reset-password/<str:uidb64>/<str:token>/`, {
+        password1,
+        password2,
+      })
+      .pipe(
+        map((data) => {
+          console.log(data)
+          return data;
+        })
+      );
+  }
 }

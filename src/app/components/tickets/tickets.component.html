@@ -7,136 +7,248 @@
 </p-toolbar>
 <div class="layout-ticket-content">
   <p-card header="Gestor de Tickets">
-    <p>Aquí iran los tickets asignados</p>
+    <p-table [value]="lstTickets" [autoLayout]="true">
+      <ng-template pTemplate="caption">
+        selectButton
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>Solicitante</th>
+          <th>Asignado</th>
+          <th>Tipo</th>
+          <th>Etapa</th>
+          <th>Área</th>
+          <th>Fecha Límite</th>
+          <th>Opciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-ticket>
+        <tr>
+          <td>{{ticket["id"]}}</td>
+          <td>{{ticket["solicitante"]["nombre"]}} {{ticket["solicitante"]["apellido_paterno"]}}</td>
+          <td>{{ticket["asignado"]["nombre"]}} {{ticket["asignado"]["apellido_paterno"]}}</td>
+          <td>{{ticket["tipo_ticket"]["nombre"]}}</td>
+          <td>{{ticket["etapa_ticket"]["nombre"]}}</td>
+          <td *ngIf="ticket['dificultad_ticket'] else sinDificultad">
+            {{ticket["dificultad_ticket"]["area_ticket"]["nombre"]}}
+          </td>
+          <ng-template #sinDificultad>
+            <td><i>Sin asignar</i></td>
+          </ng-template>
+          <td *ngIf="ticket['fecha_limite'] else sinFecha">{{ticket["fecha_limite"]}}</td>
+          <ng-template #sinFecha>
+            <td><i>Sin asignar</i></td>
+          </ng-template>
+          <td>
+            <p-splitButton icon="pi pi-eye" label="Detalle" (onClick)="showTicket(ticket['id'])"
+                           [model]="ticketButtonItems" appendTo="body"></p-splitButton>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        export
+      </ng-template>
+    </p-table>
   </p-card>
 </div>
 <p-dialog header="Nuevo ticket" [(visible)]="displayNewTicket" [modal]="true" [draggable]="false" [position]="position"
-          [closeOnEscape]="true" [dismissableMask]="true" styleClass="layout-ticket-modal" (onHide)="clearNewTicket()">
+          [closeOnEscape]="true" [dismissableMask]="true" styleClass="layout-ticket-modal" (onHide)="confirmCloseNewTicket()"
+          [maximizable]="true">
   <form [formGroup]="newTicketForm" (ngSubmit)="submitNewTicket()">
-    <div class="p-fluid p-grid p-jc-between">
-      <!--Asignado-->
-      <div class="p-field p-col-12 p-lg-6 p-grid">
-        <label for="asignado" class="p-col-12 p-lg-4 p-mb-2 p-mb-lg-0 p-text-bold">Asignado *</label>
-        <div class="p-col-12 p-lg-7">
-          <p-dropdown id="asignado" [options]="lstColaboradores" formControlName="asignado" [required]="true"
-                      placeholder="Seleccione un colaborador" optionLabel="full_name" [filter]="true"
-                      emptyFilterMessage="No se han encontrado resultados" appendTo="body"></p-dropdown>
-        </div>
+    <div class="p-grid">
+      <div class="p-col-12 p-lg-6">
+        <p-fieldset legend="Responsables" [toggleable]="true">
+          <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col-12 p-lg-6">
+              <label for="asignado" class="p-text-bold">Asignado *</label>
+              <p-dropdown id="asignado" [options]="lstColaboradores" formControlName="asignado" [required]="true"
+                          placeholder="Seleccione un colaborador" optionLabel="full_name" [filter]="true"
+                          emptyFilterMessage="No se han encontrado resultados" appendTo="body"></p-dropdown>
+              <small *ngIf="summited && nTF.asignado.errors?.required" class="p-invalid p-ml-1">Este campo es
+                requerido</small>
+            </div>
+            <div class="p-field p-col-12 p-lg-6">
+              <label for="validador">Validador</label>
+              <p-dropdown id="validador" [options]="lstColaboradores" formControlName="validador"
+                          placeholder="Seleccione un colaborador" optionLabel="full_name" [filter]="true"
+                          emptyFilterMessage="No se han encontrado resultados" appendTo="body"></p-dropdown>
+            </div>
+            <div class="p-field p-col-12 p-lg-6">
+              <h4 style="margin-top: 0; margin-bottom: 8px">Transcripción?</h4>
+              <p-inputSwitch formControlName="transcripcion" (onChange)="updateSolicitanteField()"></p-inputSwitch>
+            </div>
+            <div class="p-field p-col-12 p-lg-6" [hidden]="!nTF.transcripcion.value">
+              <label for="solicitante" class="p-text-bold">Solicitante *</label>
+              <p-dropdown id="solicitante" inputId="solicitante" [options]="lstColaboradores"
+                          formControlName="solicitante" placeholder="Seleccione un colaborador" optionLabel="full_name"
+                          [filter]="true" emptyFilterMessage="No se han encontrado resultados"
+                          appendTo="body"></p-dropdown>
+              <small *ngIf="summited && nTF.solicitante.errors?.required" class="p-invalid p-ml-1">Este campo es
+                requerido</small>
+            </div>
+          </div>
+        </p-fieldset>
+        <p-fieldset legend="Datos del requerimiento" [toggleable]="true">
+          <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col-12 p-lg-6">
+              <label for="origen" class="p-text-bold">Origen *</label>
+              <p-dropdown id="origen" [options]="lstOrigenes" formControlName="origen"
+                          placeholder="Seleccione un origen"
+                          [required]="true" optionLabel="nombre" [filter]="true"
+                          emptyFilterMessage="No se han encontrado resultados" appendTo="body"></p-dropdown>
+              <small *ngIf="summited && nTF.origen.errors?.required" class="p-invalid p-ml-1">Este campo es
+                requerido</small>
+            </div>
+            <div class="p-field p-col-12 p-lg-6">
+              <label for="prioridad" class="p-text-bold">Prioridad *</label>
+              <p-dropdown id="prioridad" [options]="lstPrioridades" formControlName="prioridad"
+                          placeholder="Seleccione una prioridad" [required]="true" optionLabel="nombre" [filter]="true"
+                          emptyFilterMessage="No se han encontrado resultados" appendTo="body"></p-dropdown>
+              <small *ngIf="summited && nTF.prioridad.errors?.required" class="p-invalid p-ml-1">Este campo es
+                requerido</small>
+            </div>
+            <div class="p-field p-col-12 p-lg-6">
+              <label for="modulo" class="p-text-bold">Módulo *</label>
+              <p-dropdown id="modulo" [options]="lstModulos" formControlName="modulo" placeholder="Seleccione un módulo"
+                          [required]="true" optionLabel="nombre" [filter]="true"
+                          emptyFilterMessage="No se han encontrado resultados" appendTo="body"></p-dropdown>
+              <small *ngIf="summited && nTF.modulo.errors?.required" class="p-invalid p-ml-1">Este campo es
+                requerido</small>
+            </div>
+            <div class="p-field p-col-12 p-lg-6">
+              <label for="tipo-ticket" class="p-text-bold">Tipo de ticket *</label>
+              <p-dropdown id="tipo-ticket" [options]="lstTiposTickets" formControlName="tipo_ticket"
+                          placeholder="Seleccione un tipo" [required]="true" optionLabel="nombre" [filter]="true"
+                          emptyFilterMessage="No se han encontrado resultados" appendTo="body"></p-dropdown>
+              <small *ngIf="summited && nTF.tipo_ticket.errors?.required" class="p-invalid p-ml-1">Este campo es
+                requerido</small>
+            </div>
+            <div class="p-field p-col-12 p-lg-6">
+              <label for="etapa-ticket" class="p-text-bold">Etapa de ticket *</label>
+              <p-dropdown id="etapa-ticket" [options]="lstEtapasTickets" formControlName="etapa_ticket"
+                          placeholder="Seleccione una etapa" [required]="true" optionLabel="nombre" [filter]="true"
+                          emptyFilterMessage="No se han encontrado resultados" appendTo="body"></p-dropdown>
+              <small *ngIf="summited && nTF.etapa_ticket.errors?.required" class="p-invalid p-ml-1">Este campo es
+                requerido</small>
+            </div>
+          </div>
+        </p-fieldset>
+        <p-fieldset legend="Datos adicionales" [toggleable]="true" [collapsed]="true">
+          <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col-12 p-lg-6">
+              <label for="version">Versión</label>
+              <input id="version" type="text" pInputText formControlName="version" placeholder="Ingrese una versión">
+            </div>
+            <div class="p-field p-col-12 p-lg-6">
+              <label for="ruta">Ruta</label>
+              <input id="ruta" type="text" pInputText formControlName="ruta" placeholder="Ingrese una ruta"
+                     [pattern]="urlPattern">
+              <small *ngIf="nTF.ruta.dirty && nTF.ruta.errors?.pattern" class="p-invalid p-ml-1">El formato de la ruta
+                es
+                inválida</small>
+            </div>
+            <div class="p-field p-col-12 p-lg-6">
+              <label for="fecha-limite">Fecha límite</label>
+              <p-calendar id="fecha-limite" formControlName="fecha_limite" [locale]="es" dateFormat="yy-mm-dd"
+                          [showButtonBar]="true" appendTo="body" placeholder="Ingrese una fecha"
+                          dataType="string"></p-calendar>
+            </div>
+          </div>
+        </p-fieldset>
+        <p-fieldset legend="Estado" [toggleable]="true">
+          <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col-12 p-lg-6">
+              <label for="area-ticket">Área de ticket</label>
+              <p-dropdown id="area-ticket" [options]="lstAreasTickets" formControlName="area_ticket"
+                          placeholder="Seleccione un área" optionLabel="nombre" [filter]="true"
+                          emptyFilterMessage="No se han encontrado resultados" appendTo="body"
+                          (onChange)="loadDificultades()" [showClear]="true"></p-dropdown>
+            </div>
+            <div class="p-field p-col-12 p-lg-6">
+              <label for="dificultad-ticket">Dificultad del ticket</label>
+              <p-dropdown id="dificultad-ticket" [options]="lstDificultadesTicketsByArea" optionLabel="full_dificultad"
+                          formControlName="dificultad_ticket" placeholder="Seleccione una dificultad"
+                          [filter]="true" [emptyFilterMessage]="getEmptyName()" appendTo="body"></p-dropdown>
+            </div>
+          </div>
+        </p-fieldset>
       </div>
-      <!--Validador-->
-      <div class="p-field p-col-12 p-lg-6 p-grid">
-        <label for="validador" class="p-col-12 p-lg-4 p-mb-2 p-mb-lg-0">Validador</label>
-        <div class="p-col-12 p-lg-7">
-          <p-dropdown id="validador" [options]="lstColaboradores" formControlName="validador"
-                      placeholder="Seleccione un colaborador" optionLabel="full_name" [filter]="true"
-                      emptyFilterMessage="No se han encontrado resultados" appendTo="body"></p-dropdown>
-        </div>
-      </div>
-      <!--Origen-->
-      <div class="p-field p-col-12 p-lg-6 p-grid">
-        <label for="origen" class="p-col-12 p-lg-4 p-mb-2 p-mb-lg-0 p-text-bold">Origen *</label>
-        <div class="p-col-12 p-lg-7">
-          <p-dropdown id="origen" [options]="lstOrigenes" formControlName="origen" placeholder="Seleccione un origen"
-                      [required]="true" optionLabel="nombre" [filter]="true"
-                      emptyFilterMessage="No se han encontrado resultados" appendTo="body"></p-dropdown>
-        </div>
-      </div>
-      <!--Módulo-->
-      <div class="p-field p-col-12 p-lg-6 p-grid">
-        <label for="modulo" class="p-col-12 p-lg-4 p-mb-2 p-mb-lg-0 p-text-bold">Módulo *</label>
-        <div class="p-col-12 p-lg-7">
-          <p-dropdown id="modulo" [options]="lstModulos" formControlName="modulo" placeholder="Seleccione un módulo"
-                      [required]="true" optionLabel="nombre" [filter]="true"
-                      emptyFilterMessage="No se han encontrado resultados" appendTo="body"></p-dropdown>
-        </div>
-      </div>
-      <!--Versión-->
-      <div class="p-field p-col-12 p-lg-6 p-grid">
-        <label for="version" class="p-col-12 p-lg-4 p-mb-2 p-mb-lg-0">Versión</label>
-        <div class="p-col-12 p-lg-7">
-          <input id="version" type="text" pInputText formControlName="version" placeholder="Ingrese una versión">
-        </div>
-      </div>
-      <!--Prioridad-->
-      <div class="p-field p-col-12 p-lg-6 p-grid">
-        <label for="prioridad" class="p-col-12 p-lg-4 p-mb-2 p-mb-lg-0 p-text-bold">Prioridad *</label>
-        <div class="p-col-12 p-lg-7">
-          <p-dropdown id="prioridad" [options]="lstPrioridades" formControlName="prioridad"
-                      placeholder="Seleccione una prioridad" [required]="true" optionLabel="nombre" [filter]="true"
-                      emptyFilterMessage="No se han encontrado resultados" appendTo="body"></p-dropdown>
-        </div>
-      </div>
-      <!--Tipo de ticket-->
-      <div class="p-field p-col-12 p-lg-6 p-grid">
-        <label for="tipo-ticket" class="p-col-12 p-lg-4 p-mb-2 p-mb-lg-0 p-text-bold">Tipo de ticket *</label>
-        <div class="p-col-12 p-lg-7">
-          <p-dropdown id="tipo-ticket" [options]="lstTiposTickets" formControlName="tipo_ticket"
-                      placeholder="Seleccione un tipo" [required]="true" optionLabel="nombre" [filter]="true"
-                      emptyFilterMessage="No se han encontrado resultados" appendTo="body"></p-dropdown>
-        </div>
-      </div>
-      <!--Fecha límite-->
-      <div class="p-field p-col-12 p-lg-6 p-grid">
-        <label for="fecha-limite" class="p-col-12 p-lg-4 p-mb-2 p-mb-lg-0">Fecha límite</label>
-        <div class="p-col-12 p-lg-7">
-          <p-calendar id="fecha-limite" formControlName="fecha_limite" [locale]="es" dateFormat="yy-mm-dd"
-                      [showButtonBar]="true" appendTo="body" placeholder="Ingrese una fecha"
-                      dataType="string"></p-calendar>
-        </div>
-      </div>
-      <!--Ruta-->
-      <div class="p-field p-col-12 p-lg-6 p-grid">
-        <label for="ruta" class="p-col-12 p-lg-4 p-mb-2 p-mb-lg-0">Ruta</label>
-        <div class="p-col-12 p-lg-7">
-          <input id="ruta" type="text" pInputText formControlName="ruta" placeholder="Ingrese una ruta">
-        </div>
-      </div>
-      <!--Etapa del ticket-->
-      <div class="p-field p-col-12 p-lg-6 p-grid">
-        <label for="etapa-ticket" class="p-col-12 p-lg-4 p-mb-2 p-mb-lg-0 p-text-bold">Etapa de ticket *</label>
-        <div class="p-col-12 p-lg-7">
-          <p-dropdown id="etapa-ticket" [options]="lstEtapasTickets" formControlName="etapa_ticket"
-                      placeholder="Seleccione una etapa" [required]="true" optionLabel="nombre" [filter]="true"
-                      emptyFilterMessage="No se han encontrado resultados" appendTo="body"></p-dropdown>
-        </div>
-      </div>
-      <!--Area del ticket-->
-      <div class="p-field p-col-12 p-lg-6 p-grid">
-        <label for="area-ticket" class="p-col-12 p-lg-4 p-mb-2 p-mb-lg-0">Área de ticket</label>
-        <div class="p-col-12 p-lg-7">
-          <p-dropdown id="area-ticket" [options]="lstAreasTickets" formControlName="area_ticket"
-                      placeholder="Seleccione un área" optionLabel="nombre" [filter]="true"
-                      emptyFilterMessage="No se han encontrado resultados" appendTo="body"
-                      (onChange)="loadDificultades()"></p-dropdown>
-        </div>
-      </div>
-      <!--Dificultades del ticket-->
-      <div class="p-field p-col-12 p-lg-6 p-grid">
-        <label for="dificultad-ticket" class="p-col-12 p-lg-4 p-mb-2 p-mb-lg-0">Dificultad del ticket</label>
-        <div class="p-col-12 p-lg-7">
-          <p-dropdown id="dificultad-ticket" [options]="lstDificultadesTicketsByArea" optionLabel="full_dificultad"
-                      formControlName="dificultad_ticket" placeholder="Seleccione una dificultad"
-                      [disabled]="!lstDificultadesTicketsByArea.length" [filter]="true"
-                      emptyFilterMessage="No se han encontrado resultados" appendTo="body"></p-dropdown>
-        </div>
-      </div>
-      <!--Asunto-->
-      <div class="p-field p-col-12">
-        <label for="asunto" class="p-text-bold">Asunto *</label>
-        <input id="asunto" type="text" pInputText formControlName="asunto" placeholder="Ingrese el asunto"
-               maxlength="100">
-      </div>
-      <!--Descripción-->
-      <div class="p-field p-col-12">
-        <label for="descripcion" class="p-text-bold">Descripción *</label>
-        <textarea pInputTextarea id="descripcion" formControlName="descripcion"
-                  placeholder="Describa el el ticket"></textarea>
-      </div>
-      <div class="p-d-flex p-flex-column-reverse p-flex-lg-row p-col-12 p-jc-between">
-        <button pButton pRipple label="Cancelar" class="p-button-danger" (click)="clearNewTicket()"></button>
-        <button pButton pRipple type="submit" label="Crear" class="p-button-success p-mb-2 p-mb-lg-0"
-                [disabled]="loading"></button>
+      <div class="p-col-12 p-lg-6">
+        <p-fieldset legend="Descripcion del ticket" [toggleable]="true">
+          <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col-12">
+              <h4 style="margin-top: 0; margin-bottom: 8px">Solicitud actual?</h4>
+              <p-inputSwitch formControlName="solicitud" (onChange)="updateFechaField()"></p-inputSwitch>
+            </div>
+            <div class="p-field p-col-12" [hidden]="nTF.solicitud.value">
+              <label for="fecha-solicitud" class="p-text-bold">Fecha de solicitud *</label>
+              <p-calendar id="fecha-solicitud" inputId="fecha-solicitud" formControlName="fecha_solicitud" [locale]="es"
+                          [showButtonBar]="true" appendTo="body" placeholder="Ingrese una fecha" [showTime]="true"></p-calendar>
+            </div>
+            <div class="p-field p-col-12">
+              <label for="asunto" class="p-text-bold">Asunto *</label>
+              <input id="asunto" type="text" pInputText formControlName="asunto" placeholder="Ingrese el asunto"
+                     maxlength="100">
+              <small *ngIf="summited && nTF.asunto.errors?.required" class="p-invalid p-ml-1">Este campo es
+                requerido</small>
+            </div>
+            <div class="p-field p-col-12">
+              <label for="descripcion" class="p-text-bold">Descripción *</label>
+              <p-editor id="descripcion" formControlName="descripcion" placeholder="Describa el ticket"
+                        [style]="{'min-height': '250px'}"></p-editor>
+              <small *ngIf="summited && nTF.descripcion.errors?.required" class="p-invalid p-ml-1">Este campo es
+                requerido</small>
+            </div>
+            <div class="p-field p-col-12">
+              <h4 style="margin-top: 0; margin-bottom: 8px">Adjuntar archivos?</h4>
+              <p-inputSwitch formControlName="adjuntar"></p-inputSwitch>
+            </div>
+            <div class="p-field p-col-12" [hidden]="!nTF.adjuntar.value">
+              <p-fileUpload #filesInput [multiple]="true" [showUploadButton]="false" [showCancelButton]="false"
+                            chooseLabel="Seleccionar"></p-fileUpload>
+            </div>
+            <div class="p-col">
+              <button pButton pRipple type="button" label="Cancelar" class="p-button-danger layout-ticket-modal-buttons"
+                      (click)="displayNewTicket=false"></button>
+            </div>
+            <div class="p-col">
+              <button pButton pRipple type="submit" label="Crear"
+                      class="p-button-success p-mb-2 p-mb-lg-0 layout-ticket-modal-buttons"
+                      [disabled]="loading"></button>
+            </div>
+          </div>
+        </p-fieldset>
       </div>
     </div>
   </form>
+</p-dialog>
+<p-dialog [header]="selTicket ? 'Ver ticket - #' + selTicket.id + ' - ' + selTicket.asunto : 'Ver ticket'"
+          [(visible)]="displayTicket" [modal]="true" [draggable]="false" [position]="position" [closeOnEscape]="true"
+          [dismissableMask]="true" styleClass="layout-ticket-modal" (onHide)="clearTicket()" [maximizable]="true">
+  <div class="p-grid">
+    <p-tabView>
+      <p-tabPanel>
+        <ng-template pTemplate="header">
+          <i class="pi pi-file"></i>
+          <span class="p-ml-2">Información</span>
+        </ng-template>
+        Cuerpo 1
+      </p-tabPanel>
+      <p-tabPanel>
+        <ng-template pTemplate="header">
+          <i class="pi pi-comments"></i>
+          <span class="p-ml-2">Comentarios</span>
+        </ng-template>
+        <app-tickets-comments [lstMensajes]="selMensajes"></app-tickets-comments>
+      </p-tabPanel>
+      <p-tabPanel>
+        <ng-template pTemplate="header">
+          <i class="pi pi-clock"></i>
+          <span class="p-ml-2">Historial</span>
+        </ng-template>
+        Cuerpo 3
+      </p-tabPanel>
+    </p-tabView>
+  </div>
 </p-dialog>

@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required],
     });
 
-    if (authenticationService.credentialValue) {
+    if (Object.keys(authenticationService.credentialValue).length) {
       this.router.navigate(['']);
     }
     this.helperService.errorMessage.subscribe((res) => {
@@ -85,9 +85,16 @@ export class LoginComponent implements OnInit {
           this.loading = false;
           this.router.navigate([this.returnUrl]);
         },
-        error: (error) => {
+        error: (err) => {
+          let errorMessage: string;
+          if (err.error.detail && err.status === 401) {
+            errorMessage =
+              'El email y/o contraseña no coinciden con cuentas activas en el sistema';
+          } else {
+            errorMessage = err.error.detail || err.message || err.statusText;
+          }
           this.loading = false;
-          this.newMessage('Inicio de sesión', error, 'error');
+          this.newMessage('Inicio de sesión', errorMessage, 'error');
         },
       });
   }

@@ -33,27 +33,32 @@ export class ErrorInterceptor implements HttpInterceptor {
         if (!environment.production) {
           console.error(err);
         }
-        let error;
+        let errorMessage;
         if (err.status === 401 && err.url.endsWith('/auth/token/')) {
-          error =
+          errorMessage =
             'El email y/o contraseña no coinciden con cuentas activas en el sistema';
         } else if (
           err.status === 400 &&
           err.url.endsWith('/auth/token/refresh/')
         ) {
-          error = 'No existe credenciales registradas en el sistema';
+          errorMessage = 'No existe credenciales registradas en el sistema';
         } else if (
           err.status === 401 &&
           err.url.endsWith('/auth/token/refresh/')
         ) {
-          error =
+          errorMessage =
             'Las credenciales del sistema han expirado. Por favor reingrese al sistema';
-          this.helperService.newErrorMessage('Error del sistema', error);
+          this.helperService.newErrorMessage('Error del sistema', errorMessage);
+        } else if (Object.keys(err.error).length) {
+          for (const [key, value] of Object.entries(err.error)) {
+            this.helperService.newErrorMessage(`Campo: ${key}`, `${value}`);
+          }
+          errorMessage = 'Errores en campos inválidos';
         } else {
-          error = err.error.detail || err.message || err.statusText;
-          this.helperService.newErrorMessage('Error del sistema', error);
+          errorMessage = err.error.detail || err.message || err.statusText;
+          this.helperService.newErrorMessage('Error del sistema', errorMessage);
         }
-        return throwError(error);
+        return throwError(errorMessage);
       })
     );
   }

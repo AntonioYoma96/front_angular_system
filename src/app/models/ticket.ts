@@ -2,31 +2,31 @@ import { Colaborador } from 'src/app/models/colaborador';
 import { Modulo } from 'src/app/models/actividades';
 
 interface Ticket {
-  id: number;
+  id?: number;
   asignado: Colaborador;
   solicitante: Colaborador;
   validador: Colaborador;
   origen: Origen;
   modulo: Modulo;
-  version: string;
+  version?: string;
   prioridad: Prioridad;
   tipo_ticket: TipoTicket;
-  fecha_limite: string;
-  ruta: string;
+  fecha_limite?: string;
+  ruta?: string;
   asunto: string;
   descripcion: string;
   etapa_ticket: EtapaTicket;
-  created: string;
-  modified: string;
+  dificultad_ticket: DificultadTicket;
+  fecha_solicitud?: string;
+  created?: string;
+  modified?: string;
 }
 
 interface TicketLog {
   id: number;
   ticket: Ticket;
-  asignado: Colaborador;
-  etapa_ticket: EtapaTicket;
-  inicio_etapa: string;
-  fin_etapa: string;
+  historial: JSON;
+  fecha_modificacion: string;
 }
 
 interface Prioridad {
@@ -62,10 +62,10 @@ interface DificultadTicket {
   full_dificultad: string;
 }
 
-interface ImagenTicket {
+interface ArchivoTicket {
   id: number;
   ticket: Ticket;
-  imagen: string;
+  archivo: File;
 }
 
 interface Mensaje {
@@ -73,14 +73,15 @@ interface Mensaje {
   ticket: Ticket;
   asunto: string;
   descripcion: string;
+  autor: Colaborador;
   created: string;
   modified: string;
 }
 
-interface ImagenMensaje {
+interface ArchivoMensaje {
   id: number;
   mensaje: Mensaje;
-  imagen: string;
+  archivo: File;
 }
 
 interface Etiqueta {
@@ -104,9 +105,9 @@ export {
   EtapaTicket,
   AreaTicket,
   DificultadTicket,
-  ImagenTicket,
+  ArchivoTicket,
   Mensaje,
-  ImagenMensaje,
+  ArchivoMensaje,
   Etiqueta,
   Origen,
 };

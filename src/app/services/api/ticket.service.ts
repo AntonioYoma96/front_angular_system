@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
+  ArchivoTicket,
   AreaTicket,
   DificultadTicket,
   EtapaTicket,
+  Mensaje,
   Origen,
   Prioridad,
   Ticket,
@@ -56,6 +58,29 @@ export class TicketService {
     return this.http.post<Ticket>(
       `${this.apiUrl}/api/ticket/tickets/`,
       newTicket
+    );
+  }
+
+  getTickets(): Observable<Ticket[]> {
+    return this.http.get<Ticket[]>(`${this.apiUrl}/api/ticket/tickets/`);
+  }
+
+  getTicket(ticketId: number): Observable<Ticket> {
+    return this.http.get<Ticket>(
+      `${this.apiUrl}/api/ticket/tickets/${ticketId}`
+    );
+  }
+
+  uploadTicketFile(form: FormData): Observable<ArchivoTicket> {
+    return this.http.post<ArchivoTicket>(
+      `${this.apiUrl}/api/ticket/archivos-ticket/`,
+      form
+    );
+  }
+
+  getMensajes(ticketId: number): Observable<Mensaje[]> {
+    return this.http.get<Mensaje[]>(
+      `${this.apiUrl}/api/ticket/mensajes/?ticket=${ticketId}`
     );
   }
 }

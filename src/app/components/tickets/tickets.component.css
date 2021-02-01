@@ -1,3 +1,7 @@
+:host ::ng-deep .layout-ticket-modal div {
+  font-size: 14px !important;
+}
+
 :host ::ng-deep div.layout-ticket-toolbar {
   padding: 10px;
   background-color: white;
@@ -24,8 +28,59 @@ div.layout-ticket-content {
   width: 90%;
 }
 
-:host ::ng-deep.layout-ticket-modal button{
+:host ::ng-deep .layout-ticket-modal p-tabView {
   width: 100%;
+}
+
+:host ::ng-deep .layout-ticket-modal .p-tabview-panels {
+  border-left: 1px solid rgb(222,226, 330);
+  border-right: 1px solid rgb(222,226, 330);
+  border-bottom: 1px solid rgb(222,226, 330);
+}
+
+:host ::ng-deep .layout-ticket-modal div.p-fieldset-content {
+  padding: 5px;
+}
+
+:host ::ng-deep .layout-ticket-modal fieldset.p-fieldset {
+  margin-bottom: 10px;
+}
+
+:host ::ng-deep .layout-ticket-modal .p-fieldset-legend a {
+  padding: 10px 15px;
+}
+
+:host ::ng-deep .layout-ticket-modal a.p-tabview-nav-link span {
+  display: none;
+}
+
+:host ::ng-deep .layout-ticket-modal li.p-highlight a.p-tabview-nav-link {
+  background: #f1f1f1;
+  border-bottom-color: #f1f1f1;
+}
+
+:host ::ng-deep .layout-ticket-modal .p-tabview-panels {
+  background: #f1f1f1;
+}
+
+:host ::ng-deep .layout-ticket-modal p-fileUpload .p-fileupload-content {
+  padding: 0.5rem;
+}
+
+:host ::ng-deep .layout-ticket-modal p-fileUpload .p-fileupload-content div.p-fileupload-row div {
+  padding: 0.5rem;
+}
+
+:host ::ng-deep .layout-ticket-modal p-fileUpload .p-fileupload-content div.p-fileupload-row > div:first-child {
+  display: none;
+}
+
+:host ::ng-deep .layout-ticket-modal p-fileUpload .p-fileupload-content div.p-fileupload-row > div:first-child + div + div {
+  display: none;
+}
+
+:host ::ng-deep .layout-ticket-modal p-fileUpload .p-fileupload-content div.p-fileupload-row button {
+  width: 2.357rem;
 }
 
 @media screen and (min-width: 992px) {
@@ -38,10 +93,14 @@ div.layout-ticket-content {
   }
 
   :host ::ng-deep .layout-ticket-modal {
-    width: 70%;
+    width: 80%;
   }
 
-  :host ::ng-deep.layout-ticket-modal button{
-    width: 25%;
+  :host ::ng-deep .layout-ticket-modal a.p-tabview-nav-link span {
+    display: initial;
+  }
+
+  :host ::ng-deep .layout-ticket-modal p-fileUpload .p-fileupload-content div.p-fileupload-row > div:first-child {
+    display: initial;
   }
 }

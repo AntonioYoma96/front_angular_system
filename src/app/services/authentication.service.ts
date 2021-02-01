@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { UserCredentials } from 'src/app/models/users';
 import { Router } from '@angular/router';
 
@@ -72,6 +72,16 @@ export class AuthenticationService {
           this.credentialsSubject.next(lastCredentials);
           this.startRefreshTokenTimer();
           return lastCredentials;
+        }),
+        catchError((err) => {
+          let errorMessage: string;
+          if (err.error.refresh) {
+            errorMessage = 'No existen credenciales registradas en el sistema';
+          } else {
+            errorMessage = err.error.detail || err.message || err.statusText;
+          }
+          this.logout();
+          return throwError(errorMessage);
         })
       );
   }

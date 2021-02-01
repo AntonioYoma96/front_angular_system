@@ -15,6 +15,9 @@ import { NavbarComponent } from 'src/app/components/shared/navbar/navbar.compone
 import { LoginComponent } from 'src/app/components/auth/login/login.component';
 import { HomeComponent } from 'src/app/components/home/home.component';
 import { TicketsComponent } from 'src/app/components/tickets/tickets.component';
+import { TicketsCommentsComponent } from 'src/app/components/tickets/tickets-comments/tickets-comments.component';
+import { RecoveryComponent } from './components/auth/recovery/recovery.component';
+import { NewPasswordComponent } from './components/auth/new-password/new-password.component';
 
 // Services
 import { HelperService } from 'src/app/services/helper.service';
@@ -28,7 +31,6 @@ import { appInitializer } from 'src/app/helpers/appInitializer';
 
 // Interceptors
 import { JwtInterceptor } from 'src/app/helpers/jwt.interceptor';
-import { ErrorInterceptor } from 'src/app/helpers/error.interceptor';
 
 // PrimeNG modules
 import { ButtonModule } from 'primeng-lts/button';
@@ -43,10 +45,17 @@ import { DialogModule } from 'primeng-lts/dialog';
 import { DropdownModule } from 'primeng-lts/dropdown';
 import { CalendarModule } from 'primeng-lts/calendar';
 import { InputTextareaModule } from 'primeng-lts/inputtextarea';
+import { TableModule } from 'primeng-lts/table';
+import { EditorModule } from 'primeng-lts/editor';
+import { FileUploadModule } from 'primeng-lts/fileupload';
+import { InputSwitchModule } from 'primeng-lts/inputswitch';
+import { FieldsetModule } from 'primeng-lts/fieldset';
+import { TabViewModule } from 'primeng-lts/tabview';
+import { ConfirmDialogModule } from 'primeng-lts/confirmdialog';
+
 // PrimeNG services
 import { MessageService } from 'primeng-lts/api';
-import { RecoveryComponent } from './components/auth/recovery/recovery.component';
-import { NewPasswordComponent } from './components/auth/new-password/new-password.component';
+import { ConfirmationService } from 'primeng-lts/api';
 
 @NgModule({
   declarations: [
@@ -56,8 +65,12 @@ import { NewPasswordComponent } from './components/auth/new-password/new-passwor
     LoginComponent,
     HomeComponent,
     TicketsComponent,
+<<<<<<< HEAD
     RecoveryComponent,
     NewPasswordComponent,
+=======
+    TicketsCommentsComponent,
+>>>>>>> master
   ],
   imports: [
     // Angular
@@ -79,12 +92,20 @@ import { NewPasswordComponent } from './components/auth/new-password/new-passwor
     DropdownModule,
     CalendarModule,
     InputTextareaModule,
+    TableModule,
+    EditorModule,
+    FileUploadModule,
+    InputSwitchModule,
+    FieldsetModule,
+    TabViewModule,
+    ConfirmDialogModule,
     // Http
     HttpClientModule,
   ],
   providers: [
     HelperService,
     MessageService,
+    ConfirmationService,
     ColaboradorService,
     TicketService,
     ActividadService,
@@ -95,7 +116,6 @@ import { NewPasswordComponent } from './components/auth/new-password/new-passwor
       deps: [AuthenticationService],
     },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

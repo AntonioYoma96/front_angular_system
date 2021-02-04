@@ -6,3 +6,17 @@
   padding-top: 5px;
   padding-bottom: 5px;
 }
+
+div.layout-ticket-comments {
+  max-height: 300px;
+  overflow-y: auto
+}
+
+div.layout-ticket-comments::-webkit-scrollbar {
+  width: 10px;
+}
+
+div.layout-ticket-comments::-webkit-scrollbar-thumb {
+  background: #2196f3;
+  border-radius: 3px;
+}

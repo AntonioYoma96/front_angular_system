@@ -25,6 +25,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ColaboradorService } from 'src/app/services/api/colaborador.service';
 import { TicketService } from 'src/app/services/api/ticket.service';
 import { ActividadService } from 'src/app/services/api/actividad.service';
+import { ValidadorService } from 'src/app/services/validador.service'
+
 
 // Initializer
 import { appInitializer } from 'src/app/helpers/appInitializer';
@@ -65,12 +67,9 @@ import { ConfirmationService } from 'primeng-lts/api';
     LoginComponent,
     HomeComponent,
     TicketsComponent,
-<<<<<<< HEAD
     RecoveryComponent,
     NewPasswordComponent,
-=======
     TicketsCommentsComponent,
->>>>>>> master
   ],
   imports: [
     // Angular
@@ -106,6 +105,7 @@ import { ConfirmationService } from 'primeng-lts/api';
     HelperService,
     MessageService,
     ConfirmationService,
+    ValidadorService,
     ColaboradorService,
     TicketService,
     ActividadService,

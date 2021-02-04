@@ -62,6 +62,12 @@ export class AuthenticationService {
 
   refreshToken(): any {
     const lastCredentials = this.credentialValue ? this.credentialValue : '';
+    if(lastCredentials){
+      this.stopRefreshTokenTimer();
+      this.credentialsSubject.next({});
+      localStorage.removeItem('credentials');
+      return throwError('No existen credenciales registradas en el sistema')
+    }
     return this.http
       .post<UserCredentials>(`${this.apiUrl}/auth/token/refresh/`, {
         refresh: lastCredentials.refresh,
@@ -90,6 +96,7 @@ export class AuthenticationService {
     this.stopRefreshTokenTimer();
     this.credentialsSubject.next({});
     localStorage.removeItem('credentials');
+    console.log(2)
     this.router.navigate(['/login']);
   }
 
@@ -111,12 +118,12 @@ export class AuthenticationService {
       );
   }
 
-  newPassword(password1: string, password2: string): Observable<any> {
-    console.log(password1)
+  newPassword(userId: string, password: string, password2: string, uidb64: string, token: string): Observable<any> {
     return this.http
-      .post<any>(`${this.apiUrl}//auth/reset-password/<str:uidb64>/<str:token>/`, {
-        password1,
+      .post<any>(`${this.apiUrl}/auth/reset-password/${uidb64}/${token}/`, {
+        password,
         password2,
+        'user_id':userId,
       })
       .pipe(
         map((data) => {

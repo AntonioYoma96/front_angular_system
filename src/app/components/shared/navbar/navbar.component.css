@@ -1,26 +1,32 @@
 div.layout-navbar {
   position: absolute;
-  margin-left: 70px;
   height: 70px;
-  width: calc(100% - 70px);
+  width: 100%;
   top: 0;
   left: 0;
-  transition: all 1s;
   outline: 1px #dee2e6 solid;
   background-color: white;
+  z-index: 200;
 }
 
-div.layout-navbar-expanded {
-  width: calc(100% - 70px) !important;
-  margin-left: 70px !important;
+div.layout-navbar-logo {
+  display: none;
+}
+
+div.layout-navbar-button-collapse {
+  margin-left: 0;
 }
 
 @media screen and (min-width: 992px) {
-  div.layout-navbar {
-    width: calc(100% - 250px);
-    margin-left: 250px;
+  div.layout-navbar-logo {
+    display: initial;
+  }
+
+  div.layout-navbar-button-collapse {
+    margin-left: 7px;
   }
 }
+
 :host ::ng-deep .layout-navbar p-splitButton span.p-button-label {
   margin-bottom: 2px;
 }

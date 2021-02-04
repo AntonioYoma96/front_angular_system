@@ -1,14 +1,4 @@
 <div class="p-d-flex p-flex-column layout-sidebar" [ngClass]="{'layout-sidebar-collapsed': isSidebarCollapsed}">
-  <div class="p-d-flex p-flex-row p-jc-between layout-sidebar-toggle">
-    <div>
-      <button pButton pRipple type="button" (click)="toggleSidebar()"
-              [icon]="isSidebarCollapsed ? 'pi pi-angle-double-right' : 'pi pi-angle-double-left'"></button>
-    </div>
-    <img src="assets/logo_app/logo_smartpeople_h40px.png" alt="Logo SmartPeople" height="40" class="p-ml-3">
-  </div>
-  <div>
-    <hr>
-  </div>
   <div class="p-as-stretch layout-sidebar-buttons"
        [ngClass]="{'layout-sidebar-buttons-scrollable': !isSidebarCollapsed}">
     <ng-container *ngFor="let item of items">

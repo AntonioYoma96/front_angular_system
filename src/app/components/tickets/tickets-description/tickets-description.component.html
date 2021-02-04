@@ -1,0 +1,69 @@
+<p-panel header="Datos responsables" styleClass="p-mb-1">
+  <div class="p-grid p-m-0">
+    <div class="p-col-12 p-lg-6 p-d-flex p-flex-row p-jc-between p-p-0 p-p-lg-2">
+      <div>Solicitante:</div>
+      <div class="p-text-bold p-text-uppercase p-text-right">{{selTicket.solicitante?.full_name}}</div>
+    </div>
+    <div class="p-col-12 p-lg-6 p-d-flex p-flex-row p-jc-between p-p-0 p-p-lg-2">
+      <div>Asignado actual:</div>
+      <div class="p-text-bold p-text-uppercase p-text-right">{{selTicket.asignado?.full_name}}</div>
+    </div>
+    <div class="p-col-12 p-lg-6 p-d-flex p-flex-row p-jc-between p-p-0 p-p-lg-2">
+      <div>Validador:</div>
+      <div class="p-text-uppercase p-text-right"
+           [ngClass]="{'p-text-bold': selTicket.validador, 'p-text-italic': !selTicket.validador}">
+        {{selTicket.validador ? selTicket.validador?.full_name : 'Sin validador'}}
+      </div>
+    </div>
+  </div>
+</p-panel>
+<p-panel header="Datos del requerimiento">
+  <div class="p-grid p-m-0">
+    <div class="p-col-12 p-lg-6 p-d-flex p-flex-row p-jc-between p-p-0 p-p-lg-2">
+      <div>Origen:</div>
+      <div class="p-text-bold p-text-uppercase p-text-right">{{selTicket.origen?.nombre}}</div>
+    </div>
+    <div class="p-col-12 p-lg-6 p-d-flex p-flex-row p-jc-between p-p-0 p-p-lg-2">
+      <div>Prioridad:</div>
+      <div class="p-text-bold p-text-uppercase p-text-right">{{selTicket.prioridad?.nombre}}</div>
+    </div>
+    <div class="p-col-12 p-lg-6 p-d-flex p-flex-row p-jc-between p-p-0 p-p-lg-2">
+      <div>Modulo:</div>
+      <div class="p-text-bold p-text-uppercase p-text-right">{{selTicket.modulo?.nombre}}</div>
+    </div>
+    <div class="p-col-12 p-lg-6 p-d-flex p-flex-row p-jc-between p-p-0 p-p-lg-2">
+      <div>Tipo de ticket:</div>
+      <div class="p-text-bold p-text-uppercase p-text-right">{{selTicket.tipo_ticket?.nombre}}</div>
+    </div>
+    <div class="p-col-12 p-lg-6 p-d-flex p-flex-row p-jc-between p-p-0 p-p-lg-2">
+      <div>Etapa de ticket:</div>
+      <div class="p-text-bold p-text-uppercase p-text-right">{{selTicket.etapa_ticket?.nombre}}</div>
+    </div>
+  </div>
+</p-panel>
+<p-panel header="Datos del requerimiento">
+  <div class="p-grid p-m-0">
+    <div class="p-col-12 p-lg-6 p-d-flex p-flex-row p-jc-between p-p-0 p-p-lg-2">
+      <div>Version:</div>
+      <div class="p-text-uppercase p-text-right"
+           [ngClass]="{'p-text-bold': selTicket.version, 'p-text-italic': !selTicket.version}">
+        {{selTicket.version ? selTicket.version : 'Sin version'}}
+      </div>
+    </div>
+    <div class="p-col-12 p-lg-6 p-d-flex p-flex-row p-jc-between p-p-0 p-p-lg-2">
+      <div>Ruta:</div>
+      <div class="p-text-uppercase p-text-right"
+           [ngClass]="{'p-text-bold': selTicket.ruta, 'p-text-italic': !selTicket.ruta}">
+        <a *ngIf="selTicket.ruta else sinRuta" [href]="selTicket.ruta">{{selTicket.ruta}}</a>
+        <ng-template #sinRuta>Sin ruta</ng-template>
+      </div>
+    </div>
+    <div class="p-col-12 p-lg-6 p-d-flex p-flex-row p-jc-between p-p-0 p-p-lg-2">
+      <div>Fecha limite:</div>
+      <div class="p-text-uppercase p-text-right"
+           [ngClass]="{'p-text-bold': selTicket.fecha_limite, 'p-text-italic': !selTicket.fecha_limite}">
+        {{selTicket.fecha_limite ? selTicket.fecha_limite : 'Sin fecha limite'}}
+      </div>
+    </div>
+  </div>
+</p-panel>

@@ -18,6 +18,8 @@ import { TicketsComponent } from 'src/app/components/tickets/tickets.component';
 import { TicketsCommentsComponent } from 'src/app/components/tickets/tickets-comments/tickets-comments.component';
 import { RecoveryComponent } from './components/auth/recovery/recovery.component';
 import { NewPasswordComponent } from './components/auth/new-password/new-password.component';
+import { TicketsNewCommentComponent } from './components/tickets/tickets-new-comment/tickets-new-comment.component';
+import { TicketsDescriptionComponent } from './components/tickets/tickets-description/tickets-description.component';
 
 // Services
 import { HelperService } from 'src/app/services/helper.service';
@@ -33,6 +35,9 @@ import { appInitializer } from 'src/app/helpers/appInitializer';
 
 // Interceptors
 import { JwtInterceptor } from 'src/app/helpers/jwt.interceptor';
+
+// Sanitizer
+import { SafeHtmlPipe } from 'src/app/helpers/htmlSanitizer';
 
 // PrimeNG modules
 import { ButtonModule } from 'primeng-lts/button';
@@ -54,6 +59,7 @@ import { InputSwitchModule } from 'primeng-lts/inputswitch';
 import { FieldsetModule } from 'primeng-lts/fieldset';
 import { TabViewModule } from 'primeng-lts/tabview';
 import { ConfirmDialogModule } from 'primeng-lts/confirmdialog';
+import { ScrollPanelModule } from 'primeng-lts/scrollpanel';
 
 // PrimeNG services
 import { MessageService } from 'primeng-lts/api';
@@ -70,6 +76,10 @@ import { ConfirmationService } from 'primeng-lts/api';
     RecoveryComponent,
     NewPasswordComponent,
     TicketsCommentsComponent,
+    // HTML Sanitizer
+    SafeHtmlPipe,
+    TicketsNewCommentComponent,
+    TicketsDescriptionComponent,
   ],
   imports: [
     // Angular
@@ -98,6 +108,7 @@ import { ConfirmationService } from 'primeng-lts/api';
     FieldsetModule,
     TabViewModule,
     ConfirmDialogModule,
+    ScrollPanelModule,
     // Http
     HttpClientModule,
   ],

@@ -1,4 +1,5 @@
 import { Colaborador } from 'src/app/models/colaborador';
+import { DatosOrganizacionales } from 'src/app/models/organizacion';
 
 interface DatosContractuales {
   id: number;
@@ -13,6 +14,7 @@ interface DatosContractuales {
   banco: Banco;
   tipo_cuenta: TipoCuenta;
   numero_cuenta: string;
+  organizacion: DatosOrganizacionales;
 }
 
 interface TipoContrato {

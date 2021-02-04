@@ -3,15 +3,18 @@ div.layout-sidebar {
   height: 100%;
   width: 250px;
   top: 0;
+  left: 0;
   padding: 15px;
   border-right: 1px solid #dee2e6;
-  transition: width 1s;
+  transition: left 1s, width 1s;
   background-color: white;
-  z-index: 100;
+  z-index: 300;
 }
 
 div.layout-sidebar-collapsed {
-  width: 73px;
+  width: 73px !important;
+  left: -73px;
+  z-index: 300;
 }
 
 div.layout-sidebar-toggle {
@@ -51,4 +54,16 @@ div.layout-sidebar-buttons-scrollable::-webkit-scrollbar-thumb {
 
 div.layout-sidebar-buttons-scrollable::-webkit-scrollbar-track {
   background-color: #f8f9fa;
+}
+
+@media screen and (min-width: 992px){
+  div.layout-sidebar {
+    top: 71px;
+    border-right: 1px solid #dee2e6;
+    transition: left 1s, width 1s;
+  }
+
+  div.layout-sidebar-collapsed {
+    left: 0;
+  }
 }

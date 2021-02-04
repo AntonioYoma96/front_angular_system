@@ -53,8 +53,7 @@
   </p-card>
 </div>
 <p-dialog header="Nuevo ticket" [(visible)]="displayNewTicket" [modal]="true" [draggable]="false" [position]="position"
-          [closeOnEscape]="true" [dismissableMask]="true" styleClass="layout-ticket-modal" (onHide)="confirmCloseNewTicket()"
-          [maximizable]="true">
+          [closable]="false" styleClass="layout-ticket-modal" (onHide)="confirmCloseNewTicket()" [maximizable]="true">
   <form [formGroup]="newTicketForm" (ngSubmit)="submitNewTicket()">
     <div class="p-grid">
       <div class="p-col-12 p-lg-6">
@@ -184,7 +183,8 @@
             <div class="p-field p-col-12" [hidden]="nTF.solicitud.value">
               <label for="fecha-solicitud" class="p-text-bold">Fecha de solicitud *</label>
               <p-calendar id="fecha-solicitud" inputId="fecha-solicitud" formControlName="fecha_solicitud" [locale]="es"
-                          [showButtonBar]="true" appendTo="body" placeholder="Ingrese una fecha" [showTime]="true"></p-calendar>
+                          [showButtonBar]="true" appendTo="body" placeholder="Ingrese una fecha"
+                          [showTime]="true"></p-calendar>
             </div>
             <div class="p-field p-col-12">
               <label for="asunto" class="p-text-bold">Asunto *</label>
@@ -195,8 +195,7 @@
             </div>
             <div class="p-field p-col-12">
               <label for="descripcion" class="p-text-bold">Descripción *</label>
-              <p-editor id="descripcion" formControlName="descripcion" placeholder="Describa el ticket"
-                        [style]="{'min-height': '250px'}"></p-editor>
+              <p-editor id="descripcion" formControlName="descripcion" [style]="{'min-height': '250px'}"></p-editor>
               <small *ngIf="summited && nTF.descripcion.errors?.required" class="p-invalid p-ml-1">Este campo es
                 requerido</small>
             </div>
@@ -210,7 +209,7 @@
             </div>
             <div class="p-col">
               <button pButton pRipple type="button" label="Cancelar" class="p-button-danger layout-ticket-modal-buttons"
-                      (click)="displayNewTicket=false"></button>
+                      (click)="displayNewTicket=false" [disabled]="loading"></button>
             </div>
             <div class="p-col">
               <button pButton pRipple type="submit" label="Crear"
@@ -223,25 +222,34 @@
     </div>
   </form>
 </p-dialog>
-<p-dialog [header]="selTicket ? 'Ver ticket - #' + selTicket.id + ' - ' + selTicket.asunto : 'Ver ticket'"
+<p-dialog [header]="selTicket.id ? 'Ver ticket - #' + selTicket.id + ' - ' + selTicket.asunto : 'Ver ticket'"
           [(visible)]="displayTicket" [modal]="true" [draggable]="false" [position]="position" [closeOnEscape]="true"
           [dismissableMask]="true" styleClass="layout-ticket-modal" (onHide)="clearTicket()" [maximizable]="true">
   <div class="p-grid">
-    <p-tabView>
+    <p-tabView [activeIndex]="viewTicketTabIndex">
+      <!--Información general-->
       <p-tabPanel>
         <ng-template pTemplate="header">
           <i class="pi pi-file"></i>
           <span class="p-ml-2">Información</span>
         </ng-template>
-        Cuerpo 1
+        <app-tickets-description [selTicket]="selTicket"></app-tickets-description>
       </p-tabPanel>
+      <!--Visualizador de comentarios-->
       <p-tabPanel>
         <ng-template pTemplate="header">
           <i class="pi pi-comments"></i>
           <span class="p-ml-2">Comentarios</span>
         </ng-template>
-        <app-tickets-comments [lstMensajes]="selMensajes"></app-tickets-comments>
+        <div class="p-d-flex p-flex-column">
+          <div class="p-mb-2">
+            <app-tickets-new-comment [selTicket]="selTicket"
+                                     (newLstMensajes)="updateLstMensajes($event)"></app-tickets-new-comment>
+          </div>
+          <app-tickets-comments [lstMensajes]="lstMensajes" [hidden]="!lstMensajes.length"></app-tickets-comments>
+        </div>
       </p-tabPanel>
+      <!--Historial-->
       <p-tabPanel>
         <ng-template pTemplate="header">
           <i class="pi pi-clock"></i>

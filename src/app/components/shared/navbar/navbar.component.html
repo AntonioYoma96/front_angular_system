@@ -1,6 +1,14 @@
-<div class="p-d-flex p-ai-center p-p-2 layout-navbar" [ngClass]="{'layout-navbar-expanded':isSidebarCollapse}">
-  <h2>{{currentTitle}}</h2>
+<div class="p-d-flex p-ai-center p-p-2 layout-navbar">
+  <div class="p-d-flex p-ai-center">
+    <div class="p-mr-3 layout-navbar-button-collapse">
+      <button pButton pRipple type="button" (click)="toggleSidebar()"
+              [icon]="isSidebarCollapsed ? 'pi pi-angle-double-right' : 'pi pi-angle-double-left'"></button>
+    </div>
+    <div class="p-mr-3 layout-navbar-logo"><img src="assets/logo_app/logo_smartpeople_h40px.png" alt="Logo SmartPeople" height="40"></div>
+    <h2>{{currentTitle}}</h2>
+  </div>
   <button pButton pRipple icon="pi pi-bell"
           class="p-ml-auto p-button-rounded p-button-secondary p-button-text"></button>
-  <p-splitButton [label]="userEmail" icon="pi pi-user" [model]="userOptions" class="p-ml-2"></p-splitButton>
+  <p-splitButton [label]="userEmail" icon="pi pi-user" [model]="userOptions" class="p-ml-2"
+                 appendTo="body"></p-splitButton>
 </div>

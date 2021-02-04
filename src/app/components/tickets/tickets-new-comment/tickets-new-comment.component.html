@@ -1,0 +1,28 @@
+<p-fieldset legend="Nuevo mensaje" [toggleable]="true" [collapsed]="true">
+  <div class="p-d-flex p-flex-column">
+    <div class="p-d-flex p-flex-column p-mb-2">
+      <div class="p-ml-1 p-mb-2"><label for="asunto-mensaje">Asunto del mensaje</label></div>
+      <input id="asunto-mensaje" type="text" pInputText placeholder="Ingrese el asunto del mensaje"
+             maxlength="100" [(ngModel)]="newMensajeAsunto">
+    </div>
+    <div class="p-ml-1 p-mb-2"><label>Detalle del mensaje</label></div>
+    <p-editor [(ngModel)]="newMensajeDetalle" [style]="{'min-height': '200px', width: '100%'}"></p-editor>
+    <div class="p-grid p-m-0">
+      <div class="p-col-12 p-lg-2 p-p-2 p-as-center">
+        <div class="p-mb-2"><label>Adjuntar archivos?</label></div>
+        <div>
+          <p-inputSwitch [(ngModel)]="attachFilesMessage"></p-inputSwitch>
+        </div>
+      </div>
+      <div class="p-col-12 p-lg-10 p-p-2" [hidden]="!attachFilesMessage">
+        <p-fileUpload #filesMessageInput [multiple]="true" [showUploadButton]="false"
+                      [showCancelButton]="false" chooseLabel="Seleccionar"
+                      [style]="{width: '100%'}"></p-fileUpload>
+      </div>
+    </div>
+    <div class="p-as-end">
+      <button pButton pRipple type="button" label="Nuevo mensaje" class="p-button-success"
+              (click)="selTicket.id ? submitNewMensaje(selTicket.id) : ''" [disabled]="loading"></button>
+    </div>
+  </div>
+</p-fieldset>

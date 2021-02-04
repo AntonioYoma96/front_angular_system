@@ -9,7 +9,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  isSidebarCollapse: boolean;
+  isSidebarCollapsed: boolean;
   currentTitle: string;
 
   userEmail = '';
@@ -19,11 +19,11 @@ export class NavbarComponent implements OnInit {
     private helperService: HelperService,
     private authenticationService: AuthenticationService
   ) {
-    this.isSidebarCollapse = false;
+    this.isSidebarCollapsed = false;
     this.currentTitle = '';
 
     this.helperService.sidebarStatus.subscribe((res) => {
-      this.isSidebarCollapse = res;
+      this.isSidebarCollapsed = res;
     });
     this.helperService.currentTitle.subscribe((res) => {
       this.currentTitle = res;
@@ -45,4 +45,8 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  toggleSidebar(): void {
+    this.helperService.toggleSidebar();
+  }
 }

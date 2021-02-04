@@ -26,6 +26,7 @@ import { AppSettings } from 'src/app/helpers/app.settings';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng-lts/api';
 import { FileUpload } from 'primeng-lts/fileupload';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { TicketsNewCommentComponent } from 'src/app/components/tickets/tickets-new-comment/tickets-new-comment.component';
 
 @Component({
   selector: 'app-tickets',
@@ -36,9 +37,9 @@ export class TicketsComponent implements OnInit {
   displayNewTicket = false;
   displayTicket = false;
   position = '';
+  viewTicketTabIndex = 0;
 
-  selTicket: Ticket | undefined;
-  selMensajes: Mensaje[] = [];
+  selTicket: Ticket = {} as Ticket;
 
   lstColaboradores: Colaborador[] = [];
   lstOrigenes: Origen[] = [];
@@ -49,6 +50,7 @@ export class TicketsComponent implements OnInit {
   lstAreasTickets: AreaTicket[] = [];
   lstDificultadesTicketsByArea: DificultadTicket[] = [];
   lstTickets: Ticket[] = [];
+  lstMensajes: Mensaje[] = [];
 
   newTicketForm: FormGroup;
 
@@ -57,12 +59,14 @@ export class TicketsComponent implements OnInit {
 
   loading = false;
   summited = false;
-  ticketCreated = false;
   isTranscripcion = true;
 
   ticketButtonItems: MenuItem[];
 
   @ViewChild('filesInput') filesInput: FileUpload | undefined;
+  @ViewChild(TicketsNewCommentComponent) newComment:
+    | TicketsNewCommentComponent
+    | undefined;
 
   constructor(
     private messageService: MessageService,
@@ -128,7 +132,6 @@ export class TicketsComponent implements OnInit {
 
   showNewTicket(): void {
     this.displayNewTicket = true;
-    this.ticketCreated = false;
     this.position = window.innerWidth > 992 ? 'center' : 'top';
 
     this.colaboradorService.getColaboradores().subscribe((data) => {
@@ -215,7 +218,6 @@ export class TicketsComponent implements OnInit {
         newTicket.fecha_solicitud = this.nTF.fecha_solicitud.value;
       }
       this.ticketService.createTicket(newTicket).subscribe((data) => {
-        this.ticketCreated = true;
         if (this.filesInput) {
           for (const file of this.filesInput.files) {
             const formData = new FormData();
@@ -280,12 +282,12 @@ export class TicketsComponent implements OnInit {
       this.selTicket = data;
     });
     this.ticketService.getMensajes(ticketId).subscribe((data) => {
-      this.selMensajes = data;
+      this.lstMensajes = data;
     });
   }
 
   confirmCloseNewTicket(): void {
-    if (this.ticketCreated) {
+    if (this.newTicketForm.dirty) {
       this.confirmationService.confirm({
         message:
           'Si cierra este cuadro perderá todo el progreso hasta ahora, ¿está seguro que desea continuar?',
@@ -297,12 +299,37 @@ export class TicketsComponent implements OnInit {
         },
       });
     } else {
-      return;
+      this.clearNewTicket();
     }
   }
 
   clearTicket(): void {
-    this.displayTicket = false;
-    this.selTicket = undefined;
+    if (
+      this.newComment?.newMensajeAsunto ||
+      this.newComment?.newMensajeDetalle
+    ) {
+      this.confirmationService.confirm({
+        message:
+          'Si cierra este cuadro perderá el mensaje en proceso, ¿está seguro que desea continuar?',
+        accept: () => {
+          this.displayTicket = false;
+          this.selTicket = {} as Ticket;
+          this.viewTicketTabIndex = 0;
+          this.lstMensajes = [];
+        },
+        reject: () => {
+          this.displayTicket = true;
+        },
+      });
+    } else {
+      this.displayTicket = false;
+      this.selTicket = {} as Ticket;
+      this.viewTicketTabIndex = 0;
+      this.lstMensajes = [];
+    }
+  }
+
+  updateLstMensajes(newLstMensajes: Mensaje[]): void {
+    this.lstMensajes = newLstMensajes;
   }
 }

@@ -1,20 +1,31 @@
 <div>
-  <p-card *ngFor="let mensaje of lstMensajes" styleClass="p-mb-3">
-    <div class="p-grid" style="margin: 0">
-      <div class="p-col-2">
-        <div class="p-d-flex p-flex-row">
-          <div class="p-as-center">
-            <i class="pi pi-user"></i>
+  <div class="layout-ticket-comments">
+    <p-card *ngFor="let mensaje of lstMensajes; let idx = index"
+            [styleClass]="idx + 1 == lstMensajes.length ? 'p-mb-0' : 'p-mb-2'">
+      <div class="p-grid" style="margin: 0">
+        <div class="p-col-12 p-lg-2 p-as-center">
+          <div class="p-d-flex p-flex-column">
+            <div class="p-d-flex p-flex-row p-flex-lg-column">
+              <div><label class="p-text-italic">Enviado por:</label></div>
+              <div class="p-ml-auto p-ml-lg-0"><label
+                class="p-text-bold">{{mensaje.autor.nombre}} {{mensaje.autor.apellido_paterno}}</label>
+              </div>
+            </div>
+            <div class="p-d-flex p-flex-column p-as-end p-as-lg-start">
+              <div><label>{{mensaje.autor.last_contrato.organizacion.cargo.nombre}}</label></div>
+              <div class="p-ml-auto p-ml-lg-0"><label class="p-text-italic">{{mensaje.autor.usuario}}</label></div>
+            </div>
           </div>
-          <div class="p-ml-2">
-            <p class="p-text-bold">{{mensaje.autor.nombre}} {{mensaje.autor.apellido_paterno}}</p>
+        </div>
+        <div class="p-col-12 p-lg-10">
+          <h3 style="margin: 10px 0 10px 0">{{mensaje.asunto}}</h3>
+          <p style="margin: 10px 0 10px 0" [innerHTML]="mensaje.descripcion | safeHtml"></p>
+          <div class="p-text-right">
+            <small class="p-text-italic">Enviado con
+              fecha {{mensaje.created ? getDateTime(mensaje.created) : ''}}</small>
           </div>
         </div>
       </div>
-      <div class="p-col-10">
-        <h3>{{mensaje.asunto}}</h3>
-        <p>{{mensaje.descripcion}}</p>
-      </div>
-    </div>
-  </p-card>
+    </p-card>
+  </div>
 </div>

@@ -35,6 +35,10 @@ export class HelperService {
     this.sidebarSubject.next(!this.sidebarSubject.value);
   }
 
+  resetSidebar(): void {
+    this.sidebarSubject.next(window.innerWidth < 992);
+  }
+
   newTitle(title: string): void {
     this.currentTitleSubject.next(title);
   }

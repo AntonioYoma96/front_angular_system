@@ -1,3 +1,5 @@
+import { DatosContractuales } from 'src/app/models/contrato';
+
 interface Colaborador {
   id: number;
   usuario: number;
@@ -20,6 +22,7 @@ interface Colaborador {
   created: string;
   modified: string;
   full_name: string;
+  last_contrato: DatosContractuales;
 }
 
 interface Sexo {

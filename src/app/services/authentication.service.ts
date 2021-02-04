@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { catchError, map } from 'rxjs/operators';
 import { UserCredentials } from 'src/app/models/users';
 import { Router } from '@angular/router';
+import { HelperService } from 'src/app/services/helper.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -15,7 +16,11 @@ export class AuthenticationService {
 
   private readonly apiUrl: string;
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private helperService: HelperService
+  ) {
     this.apiUrl = environment.apiUrl;
 
     const actualStorage = JSON.parse(
@@ -43,6 +48,7 @@ export class AuthenticationService {
           this.credentialsSubject.next(credentials);
           localStorage.setItem('credentials', JSON.stringify(credentials));
           this.startRefreshTokenTimer();
+          this.helperService.resetSidebar();
           return credentials;
         })
       );
@@ -62,6 +68,12 @@ export class AuthenticationService {
 
   refreshToken(): any {
     const lastCredentials = this.credentialValue ? this.credentialValue : '';
+    if (!Object.keys(lastCredentials).length) {
+      this.stopRefreshTokenTimer();
+      this.credentialsSubject.next({});
+      localStorage.removeItem('credentials');
+      return throwError('No existen credenciales registradas en el sistema');
+    }
     return this.http
       .post<UserCredentials>(`${this.apiUrl}/auth/token/refresh/`, {
         refresh: lastCredentials.refresh,
@@ -74,12 +86,8 @@ export class AuthenticationService {
           return lastCredentials;
         }),
         catchError((err) => {
-          let errorMessage: string;
-          if (err.error.refresh) {
-            errorMessage = 'No existen credenciales registradas en el sistema';
-          } else {
-            errorMessage = err.error.detail || err.message || err.statusText;
-          }
+          const errorMessage =
+            err.error.detail || err.message || err.statusText;
           this.logout();
           return throwError(errorMessage);
         })
@@ -90,6 +98,7 @@ export class AuthenticationService {
     this.stopRefreshTokenTimer();
     this.credentialsSubject.next({});
     localStorage.removeItem('credentials');
+    this.helperService.resetSidebar();
     this.router.navigate(['/login']);
   }
 

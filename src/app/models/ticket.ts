@@ -16,7 +16,7 @@ interface Ticket {
   asunto: string;
   descripcion: string;
   etapa_ticket: EtapaTicket;
-  dificultad_ticket: DificultadTicket;
+  dificultad_ticket?: DificultadTicket;
   fecha_solicitud?: string;
   created?: string;
   modified?: string;
@@ -69,13 +69,13 @@ interface ArchivoTicket {
 }
 
 interface Mensaje {
-  id: number;
-  ticket: Ticket;
+  id?: number;
+  ticket: Ticket | number;
   asunto: string;
   descripcion: string;
   autor: Colaborador;
-  created: string;
-  modified: string;
+  created?: string;
+  modified?: string;
 }
 
 interface ArchivoMensaje {

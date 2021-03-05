@@ -1,0 +1,90 @@
+<p-button (click)="showBasicDialog()" icon="pi pi-external-link" label="Añadir"></p-button>
+
+<div class="card">
+    <h5>Datos Actividad</h5>
+    <p-table [value]="lstDatosActividad" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Tiempo máximo</th>
+                <th>Tiempo mínimo</th>
+                <th>Cargo</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-actividad>
+            <tr>
+                <td>{{actividad.id}}</td>
+                <td>{{actividad.nombre}}</td>
+                <td>{{actividad.descripcion}}</td>
+                <td>{{actividad.tiempo_maximo}}</td>
+                <td>{{actividad.tiempo_minimo}}</td>
+                <td>{{actividad.cargo}}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+            <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+        </ng-template>
+        <ng-template pTemplate="paginatorright">
+            <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog header="Ingrese Cargo" [(visible)]="displayBasic" [style]="{width: '50vw'}" [modal]="true" (onHide)="onCloseCargoDialog()">
+    <form [formGroup]="cargoForm" (ngSubmit)="onSubmitCargo()">
+        <div class="p-fluid">
+            <div class="p-field p-grid">
+                <label for="nombre" class="p-col">Nombre</label>
+                <div class="p-col-12 p-lg-8">
+                    <input id="nombre" pInputText type="text" formControlName="nombre">
+                </div>
+                <div *ngIf="cF.nombre.dirty && cF.nombre.errors">
+                    <small *ngIf="cF.nombre.errors?.required" class="p-invalid">Campo obligatorio</small>
+                </div>
+            </div>
+            <div class="p-field p-grid">
+                <label for="descripcion" class="p-col">Descripcion</label>
+                <div class="p-col-12 p-lg-8">
+                    <input id="descripcion" pInputText type="text" formControlName="descripcion">
+                </div>
+                <div *ngIf="cF.descripcion.dirty && cF.descripcion.errors">
+                    <small *ngIf="cF.descripcion.errors?.required" class="p-invalid">Campo obligatorio</small>
+                </div>
+            </div>
+            <div class="p-field p-grid">
+                <label for="tiempo_maximo" class="p-col">Tiempo máximo</label>
+                <div class="p-col-12 p-lg-8">
+                    <input id="tiempo_maximo" pInputText type="text" formControlName="tiempo_maximo">
+                </div>
+                <div *ngIf="cF.tiempo_maximo.dirty && cF.tiempo_maximo.errors">
+                    <small *ngIf="cF.tiempo_maximo.errors?.required" class="p-invalid">Campo obligatorio</small>
+                </div>
+            </div>
+            <div class="p-field p-grid">
+                <label for="tiempo_minimo" class="p-col">Tiempo mínimo</label>
+                <div class="p-col-12 p-lg-8">
+                    <input id="tiempo_minimo" pInputText type="text" formControlName="tiempo_minimo">
+                </div>
+                <div *ngIf="cF.tiempo_minimo.dirty && cF.tiempo_minimo.errors">
+                    <small *ngIf="cF.tiempo_minimo.errors?.required" class="p-invalid">Campo obligatorio</small>
+                </div>
+            </div>
+            <div class="p-field p-grid">
+                <label for="cargo" class="p-col">Cargo</label>
+                <div class="p-col-12 p-lg-8">
+                    <input id="cargo" pInputText type="text" formControlName="cargo">
+                </div>
+                <div *ngIf="cF.cargo.dirty && cF.cargo.errors">
+                    <small *ngIf="cF.cargo.errors?.required" class="p-invalid">Campo obligatorio</small>
+                </div>
+            </div>
+            <div class="p-grid">
+                <div class="p-col">
+                    <button pButton pRipple type="submit" label="Crear" class="p-button-succes" [disabled]='loading || cargoForm.invalid'></button>
+                </div>
+            </div>
+        </div>
+    </form>
+</p-dialog>

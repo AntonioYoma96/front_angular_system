@@ -64,6 +64,40 @@ import { ScrollPanelModule } from 'primeng-lts/scrollpanel';
 // PrimeNG services
 import { MessageService } from 'primeng-lts/api';
 import { ConfirmationService } from 'primeng-lts/api';
+import { MantenedorBancosComponent } from './components/mantenedor/contrato/mantenedor-bancos/mantenedor-bancos.component';
+import { MantenedorCargosComponent } from './components/mantenedor/contrato/mantenedor-cargos/mantenedor-cargos.component';
+import { MantenedorCarreraComponent } from './components/mantenedor/contrato/mantenedor-carrera/mantenedor-carrera.component';
+import { MantenedorCentrosCostoComponent } from './components/mantenedor/contrato/mantenedor-centros-costo/mantenedor-centros-costo.component';
+import { MantenedorClientesComponent } from './components/mantenedor/contrato/mantenedor-clientes/mantenedor-clientes.component';
+import { MantenedorComunasComponent } from './components/mantenedor/contrato/mantenedor-comunas/mantenedor-comunas.component';
+import { MantenedorDatosActividadComponent } from './components/mantenedor/contrato/mantenedor-datos-actividad/mantenedor-datos-actividad.component';
+import { MantenedorDificultadTicketsComponent } from './components/mantenedor/contrato/mantenedor-dificultad-tickets/mantenedor-dificultad-tickets.component';
+import { MantenedorDiplomasComponent } from './components/mantenedor/contrato/mantenedor-diplomas/mantenedor-diplomas.component';
+import { MantenedorEstadosCivilesComponent } from './components/mantenedor/contrato/mantenedor-estados-civiles/mantenedor-estados-civiles.component';
+import { MantenedorInstitucionesComponent } from './components/mantenedor/contrato/mantenedor-instituciones/mantenedor-instituciones.component';
+import { MantenedorModulosComponent } from './components/mantenedor/contrato/mantenedor-modulos/mantenedor-modulos.component';
+import { MantenedorNacionalidadesComponent } from './components/mantenedor/contrato/mantenedor-nacionalidades/mantenedor-nacionalidades.component';
+import { MantenedorNivelesResponsabilidadComponent } from './components/mantenedor/contrato/mantenedor-niveles-responsabilidad/mantenedor-niveles-responsabilidad.component';
+import { MantenedorNivelesSkillComponent } from './components/mantenedor/contrato/mantenedor-niveles-skill/mantenedor-niveles-skill.component';
+import { MantenedorOrigenesComponent } from './components/mantenedor/contrato/mantenedor-origenes/mantenedor-origenes.component';
+import { MantenedorPrevisionesAfpComponent } from './components/mantenedor/contrato/mantenedor-previsiones-afp/mantenedor-previsiones-afp.component';
+import { MantenedorPrevisionesSaludComponent } from './components/mantenedor/contrato/mantenedor-previsiones-salud/mantenedor-previsiones-salud.component';
+import { MantenedorPrioridadesComponent } from './components/mantenedor/contrato/mantenedor-prioridades/mantenedor-prioridades.component';
+import { MantenedorProvinciasComponent } from './components/mantenedor/contrato/mantenedor-provincias/mantenedor-provincias.component';
+import { MantenedorProyectosComponent } from './components/mantenedor/contrato/mantenedor-proyectos/mantenedor-proyectos.component';
+import { MantenedorRegionesComponent } from './components/mantenedor/contrato/mantenedor-regiones/mantenedor-regiones.component';
+import { MantenedorSexosComponent } from './components/mantenedor/contrato/mantenedor-sexos/mantenedor-sexos.component';
+import { MantenedorSkillsComponent } from './components/mantenedor/contrato/mantenedor-skills/mantenedor-skills.component';
+import { MantenedorTiposContratoComponent } from './components/mantenedor/contrato/mantenedor-tipos-contrato/mantenedor-tipos-contrato.component';
+import { MantenedorTiposCuentaComponent } from './components/mantenedor/contrato/mantenedor-tipos-cuenta/mantenedor-tipos-cuenta.component';
+import { MantenedorTiposFormacionComponent } from './components/mantenedor/contrato/mantenedor-tipos-formacion/mantenedor-tipos-formacion.component';
+import { MantenedorTiposInstitucionComponent } from './components/mantenedor/contrato/mantenedor-tipos-institucion/mantenedor-tipos-institucion.component';
+import { MantenedorTiposSoporteComponent } from './components/mantenedor/contrato/mantenedor-tipos-soporte/mantenedor-tipos-soporte.component';
+import { MantenedorTiposTicketComponent } from './components/mantenedor/contrato/mantenedor-tipos-ticket/mantenedor-tipos-ticket.component';
+import { MantenedorTiposOtroFormacionComponent } from './components/mantenedor/contrato/mantenedor-tipos-otro-formacion/mantenedor-tipos-otro-formacion.component';
+import { MantenedorUnidadesComponent } from './components/mantenedor/contrato/mantenedor-unidades/mantenedor-unidades.component';
+import { MantenedorAreasTicketComponent } from './components/mantenedor/contrato/mantenedor-areas-ticket/mantenedor-areas-ticket.component';
+import { MantenedorAreasFuncionalesComponent } from './components/mantenedor/contrato/mantenedor-areas-funcionales/mantenedor-areas-funcionales.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +114,40 @@ import { ConfirmationService } from 'primeng-lts/api';
     SafeHtmlPipe,
     TicketsNewCommentComponent,
     TicketsDescriptionComponent,
+    MantenedorBancosComponent,
+    MantenedorCargosComponent,
+    MantenedorCarreraComponent,
+    MantenedorCentrosCostoComponent,
+    MantenedorClientesComponent,
+    MantenedorComunasComponent,
+    MantenedorDatosActividadComponent,
+    MantenedorDificultadTicketsComponent,
+    MantenedorDiplomasComponent,
+    MantenedorEstadosCivilesComponent,
+    MantenedorInstitucionesComponent,
+    MantenedorModulosComponent,
+    MantenedorNacionalidadesComponent,
+    MantenedorNivelesResponsabilidadComponent,
+    MantenedorNivelesSkillComponent,
+    MantenedorOrigenesComponent,
+    MantenedorPrevisionesAfpComponent,
+    MantenedorPrevisionesSaludComponent,
+    MantenedorPrioridadesComponent,
+    MantenedorProvinciasComponent,
+    MantenedorProyectosComponent,
+    MantenedorRegionesComponent,
+    MantenedorSexosComponent,
+    MantenedorSkillsComponent,
+    MantenedorTiposContratoComponent,
+    MantenedorTiposCuentaComponent,
+    MantenedorTiposFormacionComponent,
+    MantenedorTiposInstitucionComponent,
+    MantenedorTiposSoporteComponent,
+    MantenedorTiposTicketComponent,
+    MantenedorTiposOtroFormacionComponent,
+    MantenedorUnidadesComponent,
+    MantenedorAreasTicketComponent,
+    MantenedorAreasFuncionalesComponent,
   ],
   imports: [
     // Angular

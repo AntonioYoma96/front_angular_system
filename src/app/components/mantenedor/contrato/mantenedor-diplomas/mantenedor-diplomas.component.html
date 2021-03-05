@@ -1,0 +1,50 @@
+<div class="card">
+    <h1>Diplomas</h1>
+    <p-button (click)="showBasicDialog()" icon="pi pi-plus" label="Añadir"></p-button>
+    <p-table [value]="lstDiplomas" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-diploma>
+            <tr>
+                <td>{{diploma.id}}</td>
+                <td>{{diploma.nombre}}</td>
+                <td>
+                    <button pButton (click)="confirmDeleteDiploma(diploma.id)" label="Eliminar" icon="pi pi-times" class="p-button-danger"></button>
+                    <button pButton (click)="showBasicDialog(diploma)" label="Modificar" icon="pi pi-pencil" class="p-button-warning"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+            <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+        </ng-template>
+        <ng-template pTemplate="paginatorright">
+            <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog header="Ingrese Diploma" [(visible)]="displayBasic" [style]="{width: '50vw'}" [modal]="true" (onHide)="onCloseDiplomaDialog()">
+    <form [formGroup]="diplomaForm" (ngSubmit)="onSubmitDiploma()">
+        <div class="p-fluid">
+            <div class="p-field p-grid">
+                <label for="nombre" class="p-col">Nombre</label>
+                <div class="p-col-12 p-lg-8">
+                    <input id="nombre" pInputText type="text" formControlName="nombre">
+                </div>
+                <div *ngIf="cF.nombre.dirty && cF.nombre.errors">
+                    <small *ngIf="cF.nombre.errors?.required" class="p-invalid">Campo obligatorio</small>
+                </div>
+            </div>
+            <div class="p-grid">
+                <div class="p-col">
+                    <button pButton pRipple type="submit" label="Crear" class="p-button-succes" [disabled]='loading || diplomaForm.invalid'></button>
+                </div>
+            </div>
+        </div>
+    </form>
+</p-dialog>

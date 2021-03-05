@@ -1,0 +1,25 @@
+<div class="card">
+    <h5>Regiones</h5>
+    <p-table [value]="lstRegiones" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>ID</th>
+                <th>Código</th>
+                <th>Nombre</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-region>
+            <tr>
+                <td>{{region.id}}</td>
+                <td>{{region.codigo}}</td>
+                <td>{{region.nombre}}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+            <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+        </ng-template>
+        <ng-template pTemplate="paginatorright">
+            <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+        </ng-template>
+    </p-table>
+</div>

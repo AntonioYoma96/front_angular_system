@@ -27,6 +27,27 @@ export class TicketService {
     return this.http.get<Origen[]>(`${this.apiUrl}/api/ticket/origenes/`);
   }
 
+  postOrigenes(nombre: string): Observable<any> {
+    return this.http
+      .post<any>(`${this.apiUrl}/api/ticket/origenes/`, {
+        nombre,
+      })
+  }
+
+  deleteOrigenes(id: number): Observable<any> {
+    return this.http
+      .delete<any>(`${this.apiUrl}/api/ticket/origenes/${id}`, {
+      })
+  }
+
+  putOrigenes(id: string, nombre: string): Observable<any> {
+    return this.http
+      .put<any>(`${this.apiUrl}/api/ticket/origenes/${id}/`, {
+        id,
+        nombre
+      })
+  }
+
   getPrioridades(): Observable<Prioridad[]> {
     return this.http.get<Prioridad[]>(`${this.apiUrl}/api/ticket/prioridades/`);
   }
@@ -35,6 +56,27 @@ export class TicketService {
     return this.http.get<TipoTicket[]>(
       `${this.apiUrl}/api/ticket/tipos-ticket/`
     );
+  }
+
+  postTiposTickets(nombre: string): Observable<any> {
+    return this.http
+      .post<any>(`${this.apiUrl}/api/ticket/tipos-ticket/`, {
+        nombre,
+      })
+  }
+
+  deleteTiposTickets(id: number): Observable<any> {
+    return this.http
+      .delete<any>(`${this.apiUrl}/api/ticket/tipos-ticket/${id}`, {
+      })
+  }
+
+  putTiposTickets(id: string, nombre: string): Observable<any> {
+    return this.http
+      .put<any>(`${this.apiUrl}/api/ticket/tipos-ticket/${id}/`, {
+        id,
+        nombre
+      })
   }
 
   getEtapasTickets(): Observable<EtapaTicket[]> {
@@ -47,6 +89,31 @@ export class TicketService {
     return this.http.get<AreaTicket[]>(
       `${this.apiUrl}/api/ticket/areas-ticket/`
     );
+  }
+
+  postAresTicket(nombre: string): Observable<any> {
+    return this.http
+      .post<any>(`${this.apiUrl}/api/ticket/areas-ticket/`, {
+        nombre,
+      })
+  }
+
+  deleteAreasTicket(id: number): Observable<any> {
+    return this.http
+      .delete<any>(`${this.apiUrl}/api/ticket/areas-ticket/${id}`, {
+      })
+  }
+
+  putAreasTicket(id: string, nombre: string): Observable<any> {
+    return this.http
+      .put<any>(`${this.apiUrl}/api/ticket/areas-ticket/${id}/`, {
+        id,
+        nombre
+      })
+  }
+
+  getDificultadTicket(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/ticket/dificultad-ticket/`)
   }
 
   getDificultadTicketByArea(areaId: number): Observable<DificultadTicket[]> {

@@ -1,0 +1,39 @@
+<div class="card">
+    <h5>Dificultad de los Tickets</h5>
+    <p-table [value]="lstDificultadTickets" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>ID</th>
+                <th>Tipo</th>
+                <th>Nivel</th>
+                <th>Rev Mín</th>
+                <th>Rev Máx</th>
+                <th>Dev Mín</th>
+                <th>Dev Máx</th>
+                <th>Area ticket (id)</th>
+                <th>Area ticket (nombre)</th>
+                <th>Full Dificultad</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-ticket>
+            <tr>
+                <td>{{ticket.id}}</td>
+                <td>{{ticket.tipo}}</td>
+                <td>{{ticket.nivel}}</td>
+                <td>{{ticket.rev_min}}</td>
+                <td>{{ticket.rev_max}}</td>
+                <td>{{ticket.dev_min}}</td>
+                <td>{{ticket.dev_max}}</td>
+                <td>{{ticket.area_ticket.id}}</td>
+                <td>{{ticket.area_ticket.nombre}}</td>
+                <td>{{ticket.full_dificultad}}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+            <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+        </ng-template>
+        <ng-template pTemplate="paginatorright">
+            <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+        </ng-template>
+    </p-table>
+</div>

@@ -1,0 +1,25 @@
+<div class="card">
+    <h5>Módulos</h5>
+    <p-table [value]="lstModulos" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Proyecto</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-modelo>
+            <tr>
+                <td>{{modelo.id}}</td>
+                <td>{{modelo.nombre}}</td>
+                <td>{{modelo.proyecto}}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+            <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+        </ng-template>
+        <ng-template pTemplate="paginatorright">
+            <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+        </ng-template>
+    </p-table>
+</div>
